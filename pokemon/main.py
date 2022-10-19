@@ -21,7 +21,6 @@ def indexPage(downloadSuccess):
  
     return render_template("index.html", pokemonList=pokemonList, downloadSuccess=downloadSuccess)
 
-
 @app.route("/downloadPokemon")
 def downloadPokemonData():
     # Returns true/false if the file has downloaded correctly.
@@ -32,20 +31,24 @@ def downloadPokemonData():
 @app.route("/pokemonCard")
 def produceCard():
     args = request.args
+    pokemonName = args["pokemonList"]
 
-    # conn = pokemonDatabase.databaseConnect()
-    # pokemonData = pokemonDatabase.findPokemonFromName(conn, args)
-    # conn.close()
-    pokemonData = {"Name": "", "Artwork": ""}
+    pokemonData = pokemonDatabase.findPokemonFromName(pokemonName)
+
     pokemonName = pokemonData["Name"]
     pokemonArtwork = pokemonData["Artwork"]
-    # pokemonAttack = pokemonData["Attack"]
-    # pokemonDefence = pokemonData["Defence"]
-    # pokemonType1 = pokemonData["Type1"]
-    # pokemonType2 = pokemonData["Type2"]
-    # 
-    return render_template("pokemonCard.html", pokemonCardName=pokemonName, pokemonArtwork=pokemonArtwork,
-                           )
+    pokemonAttack = pokemonData["Attack"]
+    pokemonDefence = pokemonData["Defence"]
+    pokemonType1 = pokemonData["Type1"]
+    pokemonType2 = pokemonData["Type2"]
+
+    return render_template("pokemonCard.html", 
+    pokemonCardName=pokemonName, 
+    pokemonArtwork=pokemonArtwork, 
+    pokemonAttack=pokemonAttack, 
+    pokemonDefence=pokemonDefence, 
+    pokemonType1=pokemonType1, 
+    pokemonType2=pokemonType2)
 
 
 if __name__ == '__main__':

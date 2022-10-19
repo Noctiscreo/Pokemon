@@ -14,7 +14,6 @@
         <img class = "center" src="/static/banner.jpg" style="width:500px;" alt="Pokebanner"><br/><br>
         
             <p class="center" id="download">(No Pokemon Downloaded)</p><br>
-            <p class="center">Download success = {{ downloadSuccess }}</p>
             <a class="btn btn-primary" href="/downloadPokemon" type="button" onclick="download()">Download Pokemon List</a><br><br>
                 {% if pokemonList != [] %}
                     <script>document.getElementById("download").innerHTML = "Pokemon Downloaded!"</script>
@@ -27,7 +26,7 @@
                         <option value={{pokemon["Name"]}}>{{pokemon["Name"]}}</option>
                     {% endfor %}
                 </select>
-                <input type="submit" value="Submit">
+                <input  type="submit" value="Submit">
             </form>
     </div>
 
