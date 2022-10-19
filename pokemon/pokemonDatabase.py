@@ -18,7 +18,7 @@ def createTable():
     cursor = conn.cursor()
     try:
         createPokemonDatabase = '''
-            CREATE TABLE "PokemonDatabase" (
+            CREATE TABLE PokemonDatabase (
             "Name"	TEXT,
             "Artwork"	TEXT,
             "Attack"	INTEGER,
@@ -68,6 +68,7 @@ def findPokemonFromName(pokemonName: str) -> dict:
 
 def addPokemonToDatabase(pokemonData: list):
     addPokemonToDatabaseLogs = logs.Logger()
+    createTable()
     for pokemon in pokemonData:
         try:
             pokemonInsertSql = f'''
@@ -97,6 +98,25 @@ def findAllPokemon() -> list:
             pokemon = {"Name": row.Name, "Artwork": row.Artwork,
                        "Attack": row.Attack, "Defence": row.Defence,
                        "Type1": row.Type1, "Type2": row.Type2}
+            allPokemonList.append(pokemon)
+        except Exception as e:
+            findAllPokemonLogs.logger.error(e)
+    conn.close()
+    return allPokemonList
+
+def findAllNames() -> list:
+    findAllPokemonLogs = logs.Logger()
+    conn = databaseConnect()
+    selectData = f'''
+        SELECT * FROM PokemonDatabase
+        '''
+    allPokemonDF = pd.read_sql_query(selectData, conn)
+    if allPokemonDF.empty:
+        findAllPokemonLogs.logger.info("No pokemon in database")
+    allPokemonList = []
+    for row in allPokemonDF.itertuples():
+        try:
+            pokemon = {"Name": row.Name}
             allPokemonList.append(pokemon)
         except Exception as e:
             findAllPokemonLogs.logger.error(e)
