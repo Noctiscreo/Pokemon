@@ -5,7 +5,7 @@ import pokemonDatabase
 
 def downloadPokemonData() -> bool:
     downloadPokemonDataLogs = logs.Logger()
-    POKEMONLIST_URL = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151"
+    POKEMONLIST_URL = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=10"
 
     try:
         content = requests.get(POKEMONLIST_URL)
