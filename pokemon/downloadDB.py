@@ -5,7 +5,7 @@ import pokemonDatabase
 
 def downloadPokemonData() -> bool:
     downloadPokemonDataLogs = logs.Logger()
-    POKEMONLIST_URL = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=10"
+    POKEMONLIST_URL = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151"
 
     try:
         content = requests.get(POKEMONLIST_URL)
@@ -21,7 +21,7 @@ def downloadPokemonData() -> bool:
             pokemonData = requests.get(pokemonURL)
             parsedPokemon = json.loads(pokemonData.text)
             pokemonDict["Name"] = parsedPokemon["name"].capitalize()
-            pokemonDict["Artwork"] = parsedPokemon["sprites"]["front_default"]
+            pokemonDict["Artwork"] = parsedPokemon["sprites"]["other"]["official-artwork"]["front_default"]
             pokemonDict["Attack"] = parsedPokemon["stats"][1]["base_stat"]
             pokemonDict["Defence"] = parsedPokemon["stats"][2]["base_stat"]
             pokemonDict["Type1"] = parsedPokemon["types"][0]["type"]["name"].capitalize()
