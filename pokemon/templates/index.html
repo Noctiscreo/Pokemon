@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='./styles.css') }}" rel="stylesheet" type="text/css" />
+    <script src="pokemon.js"></script>
+
+    <title>Pokedex</title>
+</head>
+<body>
+    <div class="container">
+        <img class = "center" src="/static/banner.jpg" style="width:500px;" alt="Pokebanner"><br/><br>
+        
+            <p class="center" id="download">(No Pokemon Downloaded)</p><br>
+            <p class="center">Download success = {{ downloadSuccess }}</p>
+            <a class="btn btn-primary" href="/downloadPokemon" type="button" onclick="download()">Download Pokemon List</a><br><br>
+                {% if pokemonList != [] %}
+                    <script>document.getElementById("download").innerHTML = "Pokemon Downloaded!"</script>
+                {% endif %}
+
+            <form class= "center" action="/pokemonCard">
+                <label for="pokemon">Choose a Pokemon:</label>
+                <select class="form-control" name="pokemonList">
+                    {% for pokemon in pokemonList %}
+                        <option value={{pokemon}}>{{pokemon}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+    </div>
+
+</body>
+</html>
