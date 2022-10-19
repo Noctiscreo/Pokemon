@@ -1,22 +1,20 @@
 import sqlite3
 import pandas as pd
-
-# import logs
-import logging
-
-# logger = logging.getLogger("logs.pokemonDatabase")
+import logs
 
 
 def databaseConnect() -> sqlite3.Connection:
+    databaseConnectLogs = logs.Logger()
     try:
         conn = sqlite3.connect('Pokemon.db')
         return conn
-    except KeyError as e:
-        # logger.error(e)
-        print(e)
+    except Exception as e:
+        databaseConnectLogs.logger.error(e)
 
 
-def createTable(conn: sqlite3.Connection):
+def createTable():
+    createTableLogs = logs.Logger()
+    conn = databaseConnect()
     cursor = conn.cursor()
     try:
         createPokemonDatabase = '''
@@ -33,34 +31,43 @@ def createTable(conn: sqlite3.Connection):
         cursor.execute(createPokemonDatabase)
         conn.commit()
     except sqlite3.OperationalError as e:
-        # logger.error(e)
-        print(e)
+        createTableLogs.logger.error(e)
+    conn.close()
 
 
-def commitToDatabase(conn: sqlite3.Connection, command: str) -> sqlite3.Connection.cursor:
+def commitToDatabase(command: str) -> sqlite3.Connection.cursor:
+    commitToDatabaseLogs = logs.Logger()
+    conn = databaseConnect()
     cursor = conn.cursor()
     try:
         cursor.execute(command)
         conn.commit()
     except sqlite3.IntegrityError as e:
-        # logger.error(e)
-        print(e)
+        commitToDatabaseLogs.logger.error(e)
+    conn.close()
     return cursor
 
 
-def findPokemonFromName(conn: sqlite3.Connection, pokemonName: str) -> dict:
+def findPokemonFromName(pokemonName: str) -> dict:
+    findPokemonFromNameLogs = logs.Logger()
+    conn = databaseConnect()
     selectData = f'''
         SELECT * FROM PokemonDatabase
         WHERE Name = "{pokemonName}"
         '''
     pokemonNameDF = pd.read_sql_query(selectData, conn)
+    if pokemonNameDF.empty:
+        findPokemonFromNameLogs.logger.info(f"No pokemon with name: {pokemonName}")
+
     pokemon = {"Name": pokemonNameDF["Name"][0], "Artwork": pokemonNameDF["Artwork"][0],
                "Attack": pokemonNameDF["Attack"][0], "Defence": pokemonNameDF["Defence"][0],
                "Type1": pokemonNameDF["Type1"][0], "Type2": pokemonNameDF["Type2"][0]}
+    conn.close()
     return pokemon
 
 
-def addPokemonToDatabase(conn: sqlite3.Connection, pokemonData: list):
+def addPokemonToDatabase(pokemonData: list):
+    addPokemonToDatabaseLogs = logs.Logger()
     for pokemon in pokemonData:
         try:
             pokemonInsertSql = f'''
@@ -70,21 +77,28 @@ def addPokemonToDatabase(conn: sqlite3.Connection, pokemonData: list):
                     '{pokemon["Attack"]}', '{pokemon["Defence"]}', 
                     '{pokemon["Type1"]}', '{pokemon["Type2"]}')
                     '''
-            commitToDatabase(conn, pokemonInsertSql)
-        except KeyError as e:
-            # logger.error(e)
-            print(e)
+            commitToDatabase(pokemonInsertSql)
+        except Exception as e:
+            addPokemonToDatabaseLogs.logger.error(e)
 
 
-def findAllPokemon(conn: sqlite3.Connection) -> list:
+def findAllPokemon() -> list:
+    findAllPokemonLogs = logs.Logger()
+    conn = databaseConnect()
     selectData = f'''
         SELECT * FROM PokemonDatabase
         '''
     allPokemonDF = pd.read_sql_query(selectData, conn)
+    if allPokemonDF.empty:
+        findAllPokemonLogs.logger.info("No pokemon in database")
     allPokemonList = []
     for row in allPokemonDF.itertuples():
-        pokemon = {"Name": row.Name, "Artwork": row.Artwork,
-                   "Attack": row.Attack, "Defence": row.Defence,
-                   "Type1": row.Type1, "Type2": row.Type2}
-        allPokemonList.append(pokemon)
+        try:
+            pokemon = {"Name": row.Name, "Artwork": row.Artwork,
+                       "Attack": row.Attack, "Defence": row.Defence,
+                       "Type1": row.Type1, "Type2": row.Type2}
+            allPokemonList.append(pokemon)
+        except Exception as e:
+            findAllPokemonLogs.logger.error(e)
+    conn.close()
     return allPokemonList
