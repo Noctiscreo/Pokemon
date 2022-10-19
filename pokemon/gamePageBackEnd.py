@@ -1,42 +1,44 @@
+import logs
 import pokemonDatabase
+import pokemonCard
 import random
-
-
-class Pokemon:
-    def __init__(self):
-        self.name = None
-        self.attack = None
-        self.defence = None
-        self.type1 = None
-        self.type2 = None
 
 
 class Deck:
     def __init__(self):
-        # self.size = int(((len(makeDeck())) / 2) // 1)
-        # self.deck = random.sample(makeDeck(), self.size)
-        self.size = None
-        self.deck = None
+        DeckLogs = logs.Logger()
+        try:
+            pokemonDictList = pokemonDatabase.findAllPokemon()
+            pokemonDeck = []
+            for pokemon in pokemonDictList:
+                tempCard = pokemonCard.Pokemon()
+                tempCard.name = pokemon["Name"]
+                tempCard.attack = pokemon["Attack"]
+                tempCard.defence = pokemon["Defence"]
+                tempCard.type1 = pokemon["Type1"]
+                if pokemon["Type2"] != "None":
+                    tempCard.type2 = pokemon["Type2"]
+                pokemonDeck.append(tempCard)
+            self.size = len(pokemonDeck)
+            self.deck = pokemonDeck
+        except Exception as e:
+            DeckLogs.logger.error(e)
+            self.size = None
+            self.deck = [None]
+        self.deck1 = [None]
+        self.deck2 = [None]
 
+    def splitDeck(self):
+        fullDeck = Deck()
+        numDecks = 2
+        halfDeck = (fullDeck.size / numDecks) // 1
+        self.deck1 = random.sample(fullDeck.deck, halfDeck)
+        self.deck2 = [card for card in fullDeck.deck if card not in self.deck1]
 
-def splitDeck():
-    pass
+    def shuffleFullDeck(self):
+        random.shuffle(self.deck)
 
-
-def makeDeck() -> list:
-    pokemonDictList = pokemonDatabase.findAllPokemon()
-    pokemonDeck = []
-    for pokemon in pokemonDictList:
-        pokemonDeck.append(makeCard(pokemon))
-    return pokemonDeck
-
-
-def makeCard(pokemon: dict):
-    tempCard = Pokemon()
-    tempCard.name = pokemon["Name"]
-    tempCard.attack = pokemon["Attack"]
-    tempCard.defence = pokemon["Defence"]
-    tempCard.type1 = pokemon["Type1"]
-    if pokemon["Type2"] != "None":
-        tempCard.type2 = pokemon["Type2"]
-    return tempCard
+    def shuffleSubDecks(self):
+        random.shuffle(self.deck1)
+        random.shuffle(self.deck2)
+        
