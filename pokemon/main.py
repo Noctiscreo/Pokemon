@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import downloadDB
 import pokemonDatabase
+import logs
 
 app = Flask(__name__)
 
@@ -8,6 +9,7 @@ app = Flask(__name__)
 # Creates route (url)
 @app.route("/")
 def main():
+    logs.clearLogs()
     return indexPage(None)
 
 

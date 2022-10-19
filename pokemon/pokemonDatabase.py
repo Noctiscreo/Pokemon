@@ -18,14 +18,14 @@ def createTable():
     cursor = conn.cursor()
     try:
         createPokemonDatabase = '''
-            CREATE TABLE PokemonDatabase (
-            "Name"	TEXT,
-            "Artwork"	TEXT,
-            "Attack"	INTEGER,
-            "Defence"	INTEGER,
-            "Type1"	TEXT,
-            "Type2"	TEXT
-            PRIMARY KEY("Name")
+            CREATE TABLE "PokemonDatabase" (
+                "Name"	TEXT,
+                "Artwork"	TEXT,
+                "Attack"	INTEGER,
+                "Defence"	INTEGER,
+                "Type1"	TEXT,
+                "Type2"	TEXT,
+                PRIMARY KEY("Name")
             );
             '''
         cursor.execute(createPokemonDatabase)
@@ -104,11 +104,13 @@ def findAllPokemon() -> list:
     conn.close()
     return allPokemonList
 
+
 def findAllNames() -> list:
     findAllPokemonLogs = logs.Logger()
     conn = databaseConnect()
     selectData = f'''
         SELECT * FROM PokemonDatabase
+        ORDER BY Name;
         '''
     allPokemonDF = pd.read_sql_query(selectData, conn)
     if allPokemonDF.empty:

@@ -24,7 +24,7 @@
                 <label for="pokemon">Choose a Pokemon:</label>
                 <select class="form-control" name="pokemonList">
                     {% for pokemon in pokemonList %}
-                        <option value={{pokemon}}>{{pokemon}}</option>
+                        <option value={{pokemon["Name"]}}>{{pokemon["Name"]}}</option>
                     {% endfor %}
                 </select>
                 <input type="submit" value="Submit">

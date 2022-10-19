@@ -28,7 +28,7 @@ def downloadPokemonData() -> bool:
             if len(parsedPokemon["types"]) == 2:
                 pokemonDict["Type2"] = parsedPokemon["types"][1]["type"]["name"].capitalize()
             else:
-                pokemonDict["type2"] = None
+                pokemonDict["Type2"] = "None"
             pokemonInfoList.append(pokemonDict)
         
         pokemonDatabase.addPokemonToDatabase(pokemonInfoList)
