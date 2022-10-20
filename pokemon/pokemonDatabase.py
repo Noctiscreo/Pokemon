@@ -29,7 +29,7 @@ class Database:
                 pokemonDatabaseDF = pd.read_sql_query(selectData, conn)
                 if pokemonDatabaseDF.empty:
                     createPokemonDatabase = '''
-                        CREATE TABLE "PokemonDatabase" (
+                        CREATE TABLE IF NOT EXISTS "PokemonDatabase" (
                             "Name"	TEXT,
                             "Artwork"	TEXT,
                             "Attack"	INTEGER,
@@ -47,9 +47,9 @@ class Database:
                 databaseConstructLogs.logger.error(e)
         return cls._instance
 
-    def commitToDatabase(self, command: str) -> sqlite3.Connection.cursor:
+    def commitToDatabase(self, command: str, data: tuple) -> sqlite3.Connection.cursor:
         try:
-            self.cursor.execute(command)
+            self.cursor.execute(command, data)
             self.conn.commit()
         except sqlite3.IntegrityError as e:
             self.databaseLogs.logger.error(e)
@@ -70,14 +70,15 @@ def addPokemonToDatabase(pokemonData: list):
     addPokemonToDatabaseLogs = logs.Logger()
     for pokemon in pokemonData:
         try:
-            pokemonInsertSql = f'''
+            pokemonInsertSQL = '''
                     INSERT INTO PokemonDatabase
                     (Name, Artwork, Attack, Defence, Type1, Type2)
-                    VALUES ('{pokemon["Name"]}', '{pokemon["Artwork"]}', 
-                    '{pokemon["Attack"]}', '{pokemon["Defence"]}', 
-                    '{pokemon["Type1"]}', '{pokemon["Type2"]}')
+                    VALUES (?, ?, ?, ?, ?, ?)
                     '''
-            Database().commitToDatabase(pokemonInsertSql)
+            pokemonInsertSQLData = (pokemon["Name"], pokemon["Artwork"],
+                                    pokemon["Attack"], pokemon["Defence"],
+                                    pokemon["Type1"], pokemon["Type2"])
+            Database().commitToDatabase(pokemonInsertSQL, pokemonInsertSQLData)
         except Exception as e:
             addPokemonToDatabaseLogs.logger.error(e)
 
