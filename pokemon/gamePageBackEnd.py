@@ -27,17 +27,15 @@ class Deck:
             self.deck = [None]
         self.deck1 = [None]
         self.deck1Size = None
-        self.deck1OutOfCards = False
         self.deck2 = [None]
         self.deck2Size = None
-        self.deck2OutOfCards = False
 
     def splitDeck(self):
         fullDeck = Deck()
         numDecks = 2
         halfDeck = (fullDeck.size / numDecks) // 1
         self.deck1 = random.sample(fullDeck.deck, halfDeck)
-        self.deck2Size = len(self.deck1)
+        self.deck1Size = len(self.deck1)
         self.deck2 = [card for card in fullDeck.deck if card not in self.deck1]
         self.deck2Size = len(self.deck2)
 
@@ -56,12 +54,6 @@ class Deck:
 
     def cycleDeck1(self):
         self.deck1.append(self.deck1.pop(0))
-        self.deck1Size -= 1
-        if self.deck2Size == 0:
-            self.deck1OutOfCards = True
 
     def cycleDeck2(self):
         self.deck2.append(self.deck2.pop(0))
-        self.deck2Size -= 1
-        if self.deck2Size == 0:
-            self.deck2OutOfCards = True
