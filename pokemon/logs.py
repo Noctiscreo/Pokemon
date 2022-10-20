@@ -14,8 +14,8 @@ class Logger(object):
 
     def __new__(cls):
         if cls._instance is None:
-            print('Creating the object')
             cls._instance = super(Logger, cls).__new__(cls)
             logging.basicConfig(filename="pokemonLogs.log", filemode="a", level=logging.DEBUG,
                                 format='%(asctime)s - %(levelname)s: %(message)s [%(filename)s:%(lineno)s - %(funcName)20s() ]', datefmt='%m/%d/%Y %I:%M:%S %p')
+            logging.info("Creating Logger Object")
         return cls._instance
