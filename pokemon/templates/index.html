@@ -15,15 +15,17 @@
         <div>
             <img class = "center" src="/static/banner.png" style="width:500px;" alt="Pokebanner"><br><br>
         </div>
-            <span id="download" class="badge rounded-pill bg-primary">No Pokemon Downloaded!</span><br><br>
-            <a class="btn btn-success" href="/downloadPokemon" type="button">Download Pokemon List</a><br><br>
-                {% if pokemonList != [] %}
-                    <script>document.getElementById("download").innerHTML = "Pokemon Downloaded!"</script>
-                {% endif %}
-
-            <form class= "center" action="/pokemonCard">
-                <label for="pokemon">Choose a Pokemon:</label>
+            {% if pokemonList == [] %}
+            <h2><span id="downloadMessage" class="badge rounded-pill bg-primary">No Pokemon Downloaded!</span></h2><br><br>
+            {% else %}
+            <h2><span id="downloadMessage" class="badge rounded-pill bg-primary">Pokemon Downloaded!</span></h2><br><br>
+            {% endif %}
+            <a id="downloadButton" class="btn btn-success" href="/pokemonDownload" type="button">Download Pokemon List</a><br><br>      
+              
+            <form id="pokemonList" class= "center" action="/pokemonCard">
+                <label for="pokemon"></label>
                 <select class="form-control" name="pokemonList">
+                    <option value="" disabled selected>Select your Pokemon</option>
                     {% for pokemon in pokemonList %}
                         <option value={{pokemon["Name"]}}>{{pokemon["Name"]}}</option>
                     {% endfor %}
