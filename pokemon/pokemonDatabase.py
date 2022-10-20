@@ -13,26 +13,38 @@ class Database:
             self.cursor = self.conn.cursor()
         except Exception as e:
             self.databaseLogs.logger.error(e)
-        try:
-            createPokemonDatabase = '''
-                    CREATE TABLE "PokemonDatabase" (
-                        "Name"	TEXT,
-                        "Artwork"	TEXT,
-                        "Attack"	INTEGER,
-                        "Defence"	INTEGER,
-                        "Type1"	TEXT,
-                        "Type2"	TEXT,
-                        PRIMARY KEY("Name")
-                    );
-                    '''
-            self.cursor.execute(createPokemonDatabase)
-            self.conn.commit()
-        except sqlite3.OperationalError as e:
-            self.databaseLogs.logger.error(e)
+        self.empty = None
+        self.checkIfPopulated()
 
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(Database, cls).__new__(cls)
+            databaseConstructLogs = logs.Logger()
+            try:
+                conn = sqlite3.connect('Pokemon.db')
+                cursor = conn.cursor()
+                selectData = f'''
+                                SELECT * FROM PokemonDatabase
+                             '''
+                pokemonDatabaseDF = pd.read_sql_query(selectData, conn)
+                if pokemonDatabaseDF.empty:
+                    createPokemonDatabase = '''
+                        CREATE TABLE "PokemonDatabase" (
+                            "Name"	TEXT,
+                            "Artwork"	TEXT,
+                            "Attack"	INTEGER,
+                            "Defence"	INTEGER,
+                            "Type1"	TEXT,
+                            "Type2"	TEXT,
+                            PRIMARY KEY("Name")
+                        );
+                        '''
+                    cursor.execute(createPokemonDatabase)
+                    conn.commit()
+                    conn.close()
+                    databaseConstructLogs.logger.info("PokemonDatabase Table created.")
+            except Exception as e:
+                databaseConstructLogs.logger.error(e)
         return cls._instance
 
     def commitToDatabase(self, command: str) -> sqlite3.Connection.cursor:
@@ -48,9 +60,10 @@ class Database:
                 '''
         pokemonDatabaseDF = pd.read_sql_query(selectData, self.conn)
         if pokemonDatabaseDF.empty:
-            return True
+            self.empty = True
         else:
-            return False
+            self.empty = False
+        return self.empty
 
 
 def addPokemonToDatabase(pokemonData: list):
