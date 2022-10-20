@@ -33,7 +33,7 @@ class Deck:
     def splitDeck(self):
         fullDeck = Deck()
         numDecks = 2
-        halfDeck = (fullDeck.size / numDecks) // 1
+        halfDeck = int((fullDeck.size / numDecks) // 1)
         self.deck1 = random.sample(fullDeck.deck, halfDeck)
         self.deck1Size = len(self.deck1)
         self.deck2 = [card for card in fullDeck.deck if card not in self.deck1]
