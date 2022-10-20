@@ -10,7 +10,11 @@ app = Flask(__name__)
 @app.route("/")
 def main():
     logs.clearLogs()
-    return indexPage(None)
+    
+    if pokemonDatabase.Database().checkIfPopulated():
+        return indexPage(None)
+    else:
+        return indexPage(True)
 
 
 def indexPage(downloadSuccess):
