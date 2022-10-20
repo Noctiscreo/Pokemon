@@ -10,7 +10,12 @@ app = Flask(__name__)
 @app.route("/")
 def main():
     logs.clearLogs()
-    return indexPage(None)
+    pokemonList = []
+    pokemonList = pokemonDatabase.findAllNames()
+    if pokemonList == []:
+        return indexPage(None)
+    else:
+        return indexPage(True)
 
 
 def indexPage(downloadSuccess):
