@@ -42,6 +42,16 @@ class Database:
         except sqlite3.IntegrityError as e:
             self.databaseLogs.logger.error(e)
 
+    def checkIfPopulated(self):
+        selectData = f'''
+                SELECT * FROM PokemonDatabase
+                '''
+        pokemonDatabaseDF = pd.read_sql_query(selectData, self.conn)
+        if pokemonDatabaseDF.empty:
+            return True
+        else:
+            return False
+
 
 def addPokemonToDatabase(pokemonData: list):
     addPokemonToDatabaseLogs = logs.Logger()
