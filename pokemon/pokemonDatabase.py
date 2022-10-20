@@ -23,25 +23,23 @@ class Database:
             try:
                 conn = sqlite3.connect('Pokemon.db')
                 cursor = conn.cursor()
-                selectData = f'''
-                                SELECT * FROM PokemonDatabase
-                             '''
+                createPokemonDatabase = '''
+                    CREATE TABLE IF NOT EXISTS "PokemonDatabase" (
+                        "Name"	TEXT,
+                        "Artwork"	TEXT,
+                        "Attack"	INTEGER,
+                        "Defence"	INTEGER,
+                        "Type1"	TEXT,
+                        "Type2"	TEXT,
+                        PRIMARY KEY("Name")
+                    );
+                    '''
+                cursor.execute(createPokemonDatabase)
+                conn.commit()
+                conn.close()
+                selectData = "SELECT * FROM PokemonDatabase"
                 pokemonDatabaseDF = pd.read_sql_query(selectData, conn)
                 if pokemonDatabaseDF.empty:
-                    createPokemonDatabase = '''
-                        CREATE TABLE IF NOT EXISTS "PokemonDatabase" (
-                            "Name"	TEXT,
-                            "Artwork"	TEXT,
-                            "Attack"	INTEGER,
-                            "Defence"	INTEGER,
-                            "Type1"	TEXT,
-                            "Type2"	TEXT,
-                            PRIMARY KEY("Name")
-                        );
-                        '''
-                    cursor.execute(createPokemonDatabase)
-                    conn.commit()
-                    conn.close()
                     databaseConstructLogs.logger.info("PokemonDatabase Table created.")
             except Exception as e:
                 databaseConstructLogs.logger.error(e)
