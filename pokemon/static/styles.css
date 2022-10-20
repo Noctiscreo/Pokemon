@@ -3,6 +3,9 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
+a:hover {
+    text-decoration: none;
+}
 h1 {
     color: blue;
 }
@@ -31,4 +34,25 @@ h1 {
     border-radius: 25px;
     background-image: url("parchment.jpg")
 }
-
+#back {
+    width: 400px;
+    margin: auto;
+    text-align: center;
+    text-decoration: none;
+}
+.attack {
+    color: red;
+    font-weight: bold;
+}
+.defence {
+    color: green;
+    font-weight: bold;
+}
+.type1 {
+    color: goldenrod;
+    font-weight: bold;
+}
+.type2 {
+    color: purple;
+    font-weight: bold;
+}
