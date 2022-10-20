@@ -1,3 +1,8 @@
+body {
+    background-image: url('forest.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 h1 {
     color: blue;
 }
@@ -8,28 +13,22 @@ h1 {
     margin: auto;
     width: 50%;
 }
-/* .download {
-    border: none;
-    color: white;
-    padding: 16px 32px;
-    text-align: center;
+#backButton {
+    display: none;
+    width: 400px;
+    margin: auto;
     text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-  }
-  
-  .download {
-    background-color: white; 
-    color: black; 
-    border: 2px solid #4CAF50;
-  } */
-  
-  /* .download:hover {
-    background-color: #4CAF50;
-    color: white;
-  } */
-
+}
+#selectField {
+    margin: auto;
+    text-align: center;
+    width: 300px;
+}
+.card {
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 25px;
+    background-image: url("parchment.jpg")
+}
 

@@ -19,17 +19,22 @@ def main():
 
 def indexPage(downloadSuccess):
     # Get list of pokemon from database.
-    pokemonList = []
-    if downloadSuccess:
-        pokemonList = pokemonDatabase.findAllNames()
+    pokemonList = pokemonDatabase.findAllNames()
  
     return render_template("index.html", pokemonList=pokemonList, downloadSuccess=downloadSuccess)
 
-@app.route("/downloadPokemon")
+@app.route("/pokemonDownload")
+def pokemonDownload():
+    return render_template("pokemonDownload.html")
+
+@app.route("/pokemonDownloadDoDownload")
 def downloadPokemonData():
     # Returns true/false if the file has downloaded correctly.
     downloadSuccess = downloadDB.downloadPokemonData()
-    return indexPage(downloadSuccess)
+    if downloadSuccess:
+        return "1"
+    else:
+        return "0"
 
 
 @app.route("/pokemonCard")
