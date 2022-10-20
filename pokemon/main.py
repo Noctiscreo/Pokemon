@@ -10,9 +10,8 @@ app = Flask(__name__)
 @app.route("/")
 def main():
     logs.clearLogs()
-    pokemonList = []
-    pokemonList = pokemonDatabase.findAllNames()
-    if pokemonList == []:
+    
+    if pokemonDatabase.Database().checkIfPopulated():
         return indexPage(None)
     else:
         return indexPage(True)
