@@ -42,8 +42,10 @@ class Deck:
     def shuffleFullDeck(self):
         random.shuffle(self.deck)
 
-    def shuffleSubDecks(self):
+    def shuffleDeck1(self):
         random.shuffle(self.deck1)
+
+    def shuffleDeck2(self):
         random.shuffle(self.deck2)
 
     def getTopCardDeck1(self):
