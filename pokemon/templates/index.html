@@ -5,16 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', filename='./styles.css') }}" rel="stylesheet" type="text/css" />
-    <script src="pokemon.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <title>Pokedex</title>
 </head>
 <body>
     <div class="container">
-        <img class = "center" src="/static/banner.jpg" style="width:500px;" alt="Pokebanner"><br/><br>
-        
-            <p class="center" id="download">(No Pokemon Downloaded)</p><br>
-            <a class="btn btn-primary" href="/downloadPokemon" type="button" onclick="download()">Download Pokemon List</a><br><br>
+        <div>
+            <img class = "center" src="/static/banner.png" style="width:500px;" alt="Pokebanner"><br><br>
+        </div>
+            <span id="download" class="badge rounded-pill bg-primary">No Pokemon Downloaded!</span><br><br>
+            <a class="btn btn-success" href="/downloadPokemon" type="button">Download Pokemon List</a><br><br>
                 {% if pokemonList != [] %}
                     <script>document.getElementById("download").innerHTML = "Pokemon Downloaded!"</script>
                 {% endif %}
