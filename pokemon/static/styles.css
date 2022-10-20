@@ -40,3 +40,19 @@ h1 {
     text-align: center;
     text-decoration: none;
 }
+.attack {
+    color: red;
+    font-weight: bold;
+}
+.defence {
+    color: green;
+    font-weight: bold;
+}
+.type1 {
+    color: goldenrod;
+    font-weight: bold;
+}
+.type2 {
+    color: purple;
+    font-weight: bold;
+}
