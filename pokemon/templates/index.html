@@ -24,7 +24,7 @@
               
             <form id="pokemonList" class= "center" action="/pokemonCard">
                 <label for="pokemon"></label>
-                <select class="form-control" name="pokemonList">
+                <select id="selectField" class="form-control" name="pokemonList">
                     <option value="" disabled selected>Select your Pokemon</option>
                     {% for pokemon in pokemonList %}
                         <option value={{pokemon["Name"]}}>{{pokemon["Name"]}}</option>

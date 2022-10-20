@@ -15,6 +15,14 @@ h1 {
 }
 #backButton {
     display: none;
+    width: 400px;
+    margin: auto;
+    text-decoration: none;
+}
+#selectField {
+    margin: auto;
+    text-align: center;
+    width: 300px;
 }
 
 
