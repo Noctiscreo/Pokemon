@@ -15,36 +15,43 @@
         <div>
             <a href="/"><img class = "center" src="/static/banner.png" style="width:500px;" alt="Pokebanner"></a><br><br>
         </div>
-        <div class="card center" style="width: 18rem;">
-            <img class="center card-img-top" src="{{pokemonArtwork1}}" alt="Pokemon Image" style="width: 200px;">
-            <div class="card-body">
-              <h2 class="card-title">{{pokemonName1}}</h2>
+        <div class="flexContainer">
+            <div class="card center card1" style="width: 18rem;">
+                <img class="center card-img-top" src="{{pokemonArtwork1}}" alt="Pokemon Image" style="width: 200px;">
+                <div class="card-body">
+                <h2 class="card-title">{{pokemonName1}}</h2>
+                </div>
+                <div class="stats">
+                    <p class="attack">Attack: {{pokemonAttack1}}</p>
+                    <p class="defence">Defence: {{pokemonDefence1}}</p>
+                    <p class="type1">Type 1: {{pokemonType1Deck1}}</p>
+                    {% if pokemonType2Deck1 != None %}
+                        <p class="type2">Type 2: {{pokemonType2Deck1}}</p>
+                    {% else %}
+                        <p class="type2">&nbsp;</p>
+                    {% endif %}
+                </div>
             </div>
-            <div class="stats">
-                <p class="attack">Attack: {{pokemonAttack1}}</p>
-                <p class="defence">Defence: {{pokemonDefence1}}</p>
-                <p class="type1">Type 1: {{pokemonType1Deck1}}</p>
-                {% if pokemonType2Deck1 != None %}
-                    <p class="type2">Type 2: {{pokemonType2Deck1}}</p>
-                {% endif %}
+            <div id="vs">
+                <img class="center" src="/static/vs.gif" alt="Versus Image" style="width: 200px;">
+            </div>
+            <div class="card center card2" style="width: 18rem;">
+                <img class="center card-img-top" src="{{pokemonArtwork2}}" alt="Pokemon Image" style="width: 200px;">
+                <div class="card-body">
+                <h2 class="card-title">{{pokemonName2}}</h2>
+                </div>
+                <div class="stats">
+                    <p class="attack">Attack: {{pokemonAttack2}}</p>
+                    <p class="defence">Defence: {{pokemonDefence2}}</p>
+                    <p class="type1">Type 1: {{pokemonType1Deck2}}</p>
+                    {% if pokemonType2Deck2 != None %}
+                        <p class="type2">Type 2: {{pokemonType2Deck2}}</p>
+                    {% else %}
+                        <p class="type2">&nbsp;</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
-
-        <div class="card center" style="width: 18rem;">
-            <img class="center card-img-top" src="{{pokemonArtwork2}}" alt="Pokemon Image" style="width: 200px;">
-            <div class="card-body">
-              <h2 class="card-title">{{pokemonName2}}</h2>
-            </div>
-            <div class="stats">
-                <p class="attack">Attack: {{pokemonAttack2}}</p>
-                <p class="defence">Defence: {{pokemonDefence2}}</p>
-                <p class="type1">Type 1: {{pokemonType1Deck2}}</p>
-                {% if pokemonType2Deck2 != None %}
-                    <p class="type2">Type 2: {{pokemonType2Deck2}}</p>
-                {% endif %}
-            </div>
-        </div>
-
         <br><br>
         <a href="/"><h2><span id="back" class="badge rounded-pill bg-primary" >Back to Main Page</span></h2></a>
         
