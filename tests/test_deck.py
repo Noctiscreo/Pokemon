@@ -1,4 +1,4 @@
-from pokemon import downloadDB, gamePageBackEnd, logs, main, pokemonCard, pokemonDatabase
+from pokemon import gamePageBackEnd
 
 
 class TestDeck:

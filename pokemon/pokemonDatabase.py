@@ -9,7 +9,7 @@ class Database:
     def __init__(self):
         self.databaseLogs = logs.Logger()
         try:
-            self.conn = sqlite3.connect('Pokemon.db')
+            self.conn = sqlite3.connect('../Pokemon/Pokemon.db')
             self.cursor = self.conn.cursor()
         except Exception as e:
             self.databaseLogs.logger.error(e)
