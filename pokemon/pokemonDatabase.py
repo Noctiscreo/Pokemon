@@ -21,7 +21,7 @@ class Database:
             cls._instance = super(Database, cls).__new__(cls)
             databaseConstructLogs = logs.Logger()
             try:
-                conn = sqlite3.connect('Pokemon.db')
+                conn = sqlite3.connect('../Pokemon/Pokemon.db')
                 cursor = conn.cursor()
                 createPokemonDatabase = '''
                     CREATE TABLE IF NOT EXISTS "PokemonDatabase" (
