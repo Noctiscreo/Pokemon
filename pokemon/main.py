@@ -31,7 +31,9 @@ def pokemonDownload():
 @app.route("/pokemonDownloadDoDownload")
 def downloadPokemonData():
     # Returns true/false if the file has downloaded correctly.
-    downloadSuccess = downloadDB.downloadPokemonData()
+    download = downloadDB.DownloadData()
+    download.download()
+    downloadSuccess = download.complete
     if downloadSuccess:
         return "1"
     else:
@@ -45,12 +47,12 @@ def produceCard():
 
     pokemonData = pokemonDatabase.findPokemonFromName(pokemonName)
 
-    pokemonName = pokemonData["Name"]
-    pokemonArtwork = pokemonData["Artwork"]
-    pokemonAttack = pokemonData["Attack"]
-    pokemonDefence = pokemonData["Defence"]
-    pokemonType1 = pokemonData["Type1"]
-    pokemonType2 = pokemonData["Type2"]
+    pokemonName = pokemonData.name
+    pokemonArtwork = pokemonData.artwork
+    pokemonAttack = pokemonData.attack
+    pokemonDefence = pokemonData.defence
+    pokemonType1 = pokemonData.type1
+    pokemonType2 = pokemonData.type2
 
     return render_template("pokemonCard.html", 
     pokemonCardName=pokemonName, 
