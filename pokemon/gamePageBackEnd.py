@@ -8,18 +8,7 @@ class Deck:
     def __init__(self):
         self.deckLogs = logs.Logger()
         try:
-            pokemonDictList = pokemonDatabase.findAllPokemon()
-            pokemonDeck = []
-            for pokemon in pokemonDictList:
-                tempCard = pokemonCard.Pokemon()
-                tempCard.artwork = pokemon["Artwork"]
-                tempCard.name = pokemon["Name"]
-                tempCard.attack = pokemon["Attack"]
-                tempCard.defence = pokemon["Defence"]
-                tempCard.type1 = pokemon["Type1"]
-                if pokemon["Type2"] != "None":
-                    tempCard.type2 = pokemon["Type2"]
-                pokemonDeck.append(tempCard)
+            pokemonDeck = pokemonDatabase.findAllPokemon()
             self.size = len(pokemonDeck)
             self.deck = pokemonDeck
         except Exception as e:
@@ -32,12 +21,11 @@ class Deck:
         self.deck2Size = None
 
     def splitDeck(self):
-        fullDeck = Deck()
         numDecks = 2
-        halfDeck = int((fullDeck.size / numDecks) // 1)
-        self.deck1 = random.sample(fullDeck.deck, halfDeck)
+        halfDeck = int((self.size / numDecks) // 1)
+        self.deck1 = random.sample(self.deck, halfDeck)
         self.deck1Size = len(self.deck1)
-        self.deck2 = [card for card in fullDeck.deck if card not in self.deck1]
+        self.deck2 = [card for card in self.deck if card not in self.deck1]
         # if len(self.deck1) != len(self.deck2):
         #     self.deck2.pop(random.randrange(halfDeck + 1))
         self.deck2Size = len(self.deck2)
