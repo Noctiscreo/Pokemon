@@ -11,11 +11,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def menu():
-    logs.clearLogs()
+    pass
 
 @app.route("/pokedex")
 def main():
-    
+
     if pokemonDatabase.Database().checkIfEmpty():
         return indexPage(None)
     else:
@@ -25,7 +25,7 @@ def main():
 def indexPage(downloadSuccess):
     # Get list of pokemon from database.
     pokemonList = pokemonDatabase.findAllNames()
- 
+
     return render_template("pokedex.html", pokemonList=pokemonList, downloadSuccess=downloadSuccess)
 
 @app.route("/pokemonDownload")
@@ -58,12 +58,12 @@ def produceCard():
     pokemonType1 = pokemonData.type1
     pokemonType2 = pokemonData.type2
 
-    return render_template("pokemonCard.html", 
-    pokemonCardName=pokemonName, 
-    pokemonArtwork=pokemonArtwork, 
-    pokemonAttack=pokemonAttack, 
-    pokemonDefence=pokemonDefence, 
-    pokemonType1=pokemonType1, 
+    return render_template("pokemonCard.html",
+    pokemonCardName=pokemonName,
+    pokemonArtwork=pokemonArtwork,
+    pokemonAttack=pokemonAttack,
+    pokemonDefence=pokemonDefence,
+    pokemonType1=pokemonType1,
     pokemonType2=pokemonType2)
 
 @app.route("/pokemonGame")
@@ -85,7 +85,7 @@ def pageSetup():
         pokemonDefence1 = topDeck1.defence,
         pokemonType1Deck1 = topDeck1.type1,
         pokemonType2Deck1 = topDeck1.type2,
-        
+
         pokemonArtwork2 = topDeck2.artwork,
         pokemonName2 = topDeck2.name,
         pokemonAttack2 = topDeck2.attack,
@@ -96,4 +96,5 @@ def pageSetup():
         return render_template("pokemonGame.html", databaseCheck = databaseEmpty)
 
 if __name__ == '__main__':
+    logs.clearLogs()
     app.run()

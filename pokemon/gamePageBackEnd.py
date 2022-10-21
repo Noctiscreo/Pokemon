@@ -8,18 +8,7 @@ class Deck:
     def __init__(self):
         self.deckLogs = logs.Logger()
         try:
-            pokemonDictList = pokemonDatabase.findAllPokemon()
-            pokemonDeck = []
-            for pokemon in pokemonDictList:
-                tempCard = pokemonCard.Pokemon()
-                tempCard.artwork = pokemon["Artwork"]
-                tempCard.name = pokemon["Name"]
-                tempCard.attack = pokemon["Attack"]
-                tempCard.defence = pokemon["Defence"]
-                tempCard.type1 = pokemon["Type1"]
-                if pokemon["Type2"] != "None":
-                    tempCard.type2 = pokemon["Type2"]
-                pokemonDeck.append(tempCard)
+            pokemonDeck = pokemonDatabase.findAllPokemon()
             self.size = len(pokemonDeck)
             self.deck = pokemonDeck
         except Exception as e:
