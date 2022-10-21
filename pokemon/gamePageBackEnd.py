@@ -37,6 +37,8 @@ class Deck:
         self.deck1 = random.sample(fullDeck.deck, halfDeck)
         self.deck1Size = len(self.deck1)
         self.deck2 = [card for card in fullDeck.deck if card not in self.deck1]
+        # if len(self.deck1) != len(self.deck2):
+        #     self.deck2.pop(random.randrange(halfDeck + 1))
         self.deck2Size = len(self.deck2)
         self.deckLogs.logger.info("Deck was split and assigned to deck 1 and deck 2")
 
