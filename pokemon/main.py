@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import downloadDB
 import pokemonDatabase
 import logs
+import gamePageBackEnd
 
 app = Flask(__name__)
 
@@ -59,6 +60,28 @@ def produceCard():
     pokemonType1=pokemonType1, 
     pokemonType2=pokemonType2)
 
+@app.route("/pokemonGame")
+def pageSetup():
+    pokemonDeck = gamePageBackEnd.Deck()
+    pokemonDeck.shuffleFullDeck()
+    pokemonDeck.splitDeck()
+    pokemonDeck.shuffleDeck1()
+    pokemonDeck.shuffleDeck2()
+    topDeck1 = pokemonDeck.getTopCardDeck1()
+    #pokemonArtwork1 = topDeck1.artwork
+    pokemonAttack1 = topDeck1.attack
+    pokemonDefence1 = topDeck1.defence
+    pokemonType1Deck1 = topDeck1.type1
+    pokemonType2Deck1 = topDeck1.type2
+
+    topDeck2 = pokemonDeck.getTopCardDeck2()
+    
+    
+    return render_template("pokemonGame.html", 
+    pokemonAttack1 = pokemonAttack1, 
+    pokemonDefence1 = pokemonDefence1,
+    pokemonType1Deck1 = pokemonType1Deck1,
+    pokemonType2Deck1 = pokemonType2Deck1)
 
 if __name__ == '__main__':
     app.run()
