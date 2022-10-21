@@ -8,9 +8,13 @@ app = Flask(__name__)
 
 
 # Creates route (url)
+
 @app.route("/")
-def main():
+def menu():
     logs.clearLogs()
+
+@app.route("/pokedex")
+def main():
     
     if pokemonDatabase.Database().checkIfPopulated():
         return indexPage(None)
@@ -22,7 +26,7 @@ def indexPage(downloadSuccess):
     # Get list of pokemon from database.
     pokemonList = pokemonDatabase.findAllNames()
  
-    return render_template("index.html", pokemonList=pokemonList, downloadSuccess=downloadSuccess)
+    return render_template("pokedex.html", pokemonList=pokemonList, downloadSuccess=downloadSuccess)
 
 @app.route("/pokemonDownload")
 def pokemonDownload():
@@ -62,43 +66,32 @@ def produceCard():
 
 @app.route("/pokemonGame")
 def pageSetup():
-    pokemonDeck = gamePageBackEnd.Deck()
-    pokemonDeck.shuffleFullDeck()
-    pokemonDeck.splitDeck()
-    pokemonDeck.shuffleDeck1()
-    pokemonDeck.shuffleDeck2()
+    databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
+    if databaseEmpty == False:
+        pokemonDeck = gamePageBackEnd.Deck()
+        pokemonDeck.shuffleFullDeck()
+        pokemonDeck.splitDeck()
+        pokemonDeck.shuffleDeck1()
+        pokemonDeck.shuffleDeck2()
+        topDeck1 = pokemonDeck.getTopCardDeck1()
+        topDeck2 = pokemonDeck.getTopCardDeck2()
 
-    topDeck1 = pokemonDeck.getTopCardDeck1()
-    pokemonArtwork1 = topDeck1.artwork
-    pokemonName1 = topDeck1.name
-    pokemonAttack1 = topDeck1.attack
-    pokemonDefence1 = topDeck1.defence
-    pokemonType1Deck1 = topDeck1.type1
-    pokemonType2Deck1 = topDeck1.type2
-
-    topDeck2 = pokemonDeck.getTopCardDeck2()
-    pokemonArtwork2 = topDeck2.artwork
-    pokemonName2 = topDeck2.name
-    pokemonAttack2 = topDeck2.attack
-    pokemonDefence2 = topDeck2.defence
-    pokemonType1Deck2 = topDeck2.type1
-    pokemonType2Deck2 = topDeck2.type2
-    
-    
-    return render_template("pokemonGame.html", 
-    pokemonArtwork1 = pokemonArtwork1,
-    pokemonName1 = pokemonName1,
-    pokemonAttack1 = pokemonAttack1, 
-    pokemonDefence1 = pokemonDefence1,
-    pokemonType1Deck1 = pokemonType1Deck1,
-    pokemonType2Deck1 = pokemonType2Deck1,
-    
-    pokemonArtwork2 = pokemonArtwork2,
-    pokemonName2 = pokemonName2,
-    pokemonAttack2 = pokemonAttack2, 
-    pokemonDefence2 = pokemonDefence2,
-    pokemonType1Deck2 = pokemonType1Deck2,
-    pokemonType2Deck2 = pokemonType2Deck2)
+        return render_template("pokemonGame.html", databaseCheck = databaseEmpty,
+        pokemonArtwork1 = topDeck1.artwork,
+        pokemonName1 = topDeck1.name,
+        pokemonAttack1 = topDeck1.attack,
+        pokemonDefence1 = topDeck1.defence,
+        pokemonType1Deck1 = topDeck1.type1,
+        pokemonType2Deck1 = topDeck1.type2,
+        
+        pokemonArtwork2 = topDeck2.artwork,
+        pokemonName2 = topDeck2.name,
+        pokemonAttack2 = topDeck2.attack,
+        pokemonDefence2 = topDeck2.defence,
+        pokemonType1Deck2 = topDeck2.type1,
+        pokemonType2Deck2 = topDeck2.type2)
+    else:
+        return render_template("pokemonGame.html", databaseCheck = databaseEmpty)
 
 if __name__ == '__main__':
     app.run()
