@@ -3,6 +3,7 @@ import json
 import logs
 import pokemonDatabase
 
+
 def downloadPokemonData() -> bool:
     downloadPokemonDataLogs = logs.Logger()
     POKEMONLIST_URL = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151"
@@ -30,11 +31,12 @@ def downloadPokemonData() -> bool:
             else:
                 pokemonDict["Type2"] = "None"
             pokemonInfoList.append(pokemonDict)
-        
+
         pokemonDatabase.addPokemonToDatabase(pokemonInfoList)
         downloadPokemonDataLogs.logger.info("List of pokemon sucessfully created and sent to database.")
         return True
-    
+
     except:
-        downloadPokemonDataLogs.logger.error("There was a problem downloading and creating the list of pokemon and sending to database.")
+        downloadPokemonDataLogs.logger.error(
+            "There was a problem downloading and creating the list of pokemon and sending to database.")
         return False
