@@ -53,7 +53,9 @@ class Database:
         except sqlite3.IntegrityError as e:
             self.databaseLogs.logger.error(e)
 
-    def checkIfEmpty(self):
+
+    def checkIfEmpty(self) -> bool:
+
         selectData = f'''
                 SELECT * FROM PokemonDatabase
                 '''
