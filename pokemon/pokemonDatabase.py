@@ -1,6 +1,7 @@
 import sqlite3
 import pandas as pd
 import logs
+import pokemonCard
 
 
 class Database:
@@ -52,7 +53,9 @@ class Database:
         except sqlite3.IntegrityError as e:
             self.databaseLogs.logger.error(e)
 
+
     def checkIfEmpty(self) -> bool:
+
         selectData = f'''
                 SELECT * FROM PokemonDatabase
                 '''
@@ -73,15 +76,15 @@ def addPokemonToDatabase(pokemonData: list):
                     (Name, Artwork, Attack, Defence, Type1, Type2)
                     VALUES (?, ?, ?, ?, ?, ?)
                     '''
-            pokemonInsertSQLData = (pokemon["Name"], pokemon["Artwork"],
-                                    pokemon["Attack"], pokemon["Defence"],
-                                    pokemon["Type1"], pokemon["Type2"])
+            pokemonInsertSQLData = (pokemon.name, pokemon.artwork,
+                                    pokemon.attack, pokemon.defence,
+                                    pokemon.type1, pokemon.type2)
             Database().commitToDatabase(pokemonInsertSQL, pokemonInsertSQLData)
         except Exception as e:
             addPokemonToDatabaseLogs.logger.error(e)
 
 
-def findPokemonFromName(pokemonName: str) -> dict:
+def findPokemonFromName(pokemonName: str) -> object:
     findPokemonFromNameLogs = logs.Logger()
     selectData = f'''
         SELECT * FROM PokemonDatabase
@@ -90,11 +93,23 @@ def findPokemonFromName(pokemonName: str) -> dict:
     pokemonNameDF = pd.read_sql_query(selectData, Database().conn)
     if pokemonNameDF.empty:
         findPokemonFromNameLogs.logger.info(f"No pokemon with name: {pokemonName}")
-
-    pokemon = {"Name": pokemonNameDF["Name"][0], "Artwork": pokemonNameDF["Artwork"][0],
-               "Attack": pokemonNameDF["Attack"][0], "Defence": pokemonNameDF["Defence"][0],
-               "Type1": pokemonNameDF["Type1"][0], "Type2": pokemonNameDF["Type2"][0]}
-    return pokemon
+        return pokemonCard.Pokemon()
+    else:
+        for row in pokemonNameDF.itertuples():
+            try:
+                tempPokemon = pokemonCard.Pokemon()
+                tempPokemon.name = row.Name
+                tempPokemon.artwork = row.Artwork
+                tempPokemon.attack = row.Attack
+                tempPokemon.defence = row.Defence
+                tempPokemon.type1 = row.Type1
+                tempPokemon.type2 = row.Type2
+                return tempPokemon
+                # pokemon = {"Name": row.Name, "Artwork": row.Artwork,
+                #            "Attack": row.Attack, "Defence": row.Defence,
+                #            "Type1": row.Type1, "Type2": row.Type2}
+            except Exception as e:
+                findPokemonFromNameLogs.logger.error(e)
 
 
 def findAllPokemon() -> list:
@@ -108,10 +123,17 @@ def findAllPokemon() -> list:
     allPokemonDataList = []
     for row in allPokemonDF.itertuples():
         try:
-            pokemon = {"Name": row.Name, "Artwork": row.Artwork,
-                       "Attack": row.Attack, "Defence": row.Defence,
-                       "Type1": row.Type1, "Type2": row.Type2}
-            allPokemonDataList.append(pokemon)
+            tempPokemon = pokemonCard.Pokemon()
+            tempPokemon.name = row.Name
+            tempPokemon.artwork = row.Artwork
+            tempPokemon.attack = row.Attack
+            tempPokemon.defence = row.Defence
+            tempPokemon.type1 = row.Type1
+            tempPokemon.type2 = row.Type2
+            # pokemon = {"Name": row.Name, "Artwork": row.Artwork,
+            #            "Attack": row.Attack, "Defence": row.Defence,
+            #            "Type1": row.Type1, "Type2": row.Type2}
+            allPokemonDataList.append(tempPokemon)
         except Exception as e:
             findAllPokemonLogs.logger.error(e)
     return allPokemonDataList
