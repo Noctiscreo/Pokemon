@@ -18,7 +18,7 @@
         <div class="card center" style="width: 18rem;">
             <img class="center card-img-top" src="{{pokemonArtwork1}}" alt="Pokemon Image" style="width: 200px;">
             <div class="card-body">
-              <h2 class="card-title">{{pokemonCardName}}</h2>
+              <h2 class="card-title">{{pokemonName1}}</h2>
             </div>
             <div class="stats">
                 <p class="attack">Attack: {{pokemonAttack1}}</p>
@@ -26,6 +26,21 @@
                 <p class="type1">Type 1: {{pokemonType1Deck1}}</p>
                 {% if pokemonType2Deck1 != None %}
                     <p class="type2">Type 2: {{pokemonType2Deck1}}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card center" style="width: 18rem;">
+            <img class="center card-img-top" src="{{pokemonArtwork2}}" alt="Pokemon Image" style="width: 200px;">
+            <div class="card-body">
+              <h2 class="card-title">{{pokemonName2}}</h2>
+            </div>
+            <div class="stats">
+                <p class="attack">Attack: {{pokemonAttack2}}</p>
+                <p class="defence">Defence: {{pokemonDefence2}}</p>
+                <p class="type1">Type 1: {{pokemonType1Deck2}}</p>
+                {% if pokemonType2Deck2 != None %}
+                    <p class="type2">Type 2: {{pokemonType2Deck2}}</p>
                 {% endif %}
             </div>
         </div>

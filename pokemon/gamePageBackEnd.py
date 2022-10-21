@@ -12,6 +12,7 @@ class Deck:
             pokemonDeck = []
             for pokemon in pokemonDictList:
                 tempCard = pokemonCard.Pokemon()
+                tempCard.artwork = pokemon["Artwork"]
                 tempCard.name = pokemon["Name"]
                 tempCard.attack = pokemon["Attack"]
                 tempCard.defence = pokemon["Defence"]
