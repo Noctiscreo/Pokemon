@@ -15,7 +15,7 @@ class Database:
         except Exception as e:
             self.databaseLogs.logger.error(e)
         self.empty = None
-        self.checkIfPopulated()
+        self.checkIfEmpty()
 
     def __new__(cls):
         if cls._instance is None:
@@ -53,7 +53,7 @@ class Database:
         except sqlite3.IntegrityError as e:
             self.databaseLogs.logger.error(e)
 
-    def checkIfPopulated(self):
+    def checkIfEmpty(self):
         selectData = f'''
                 SELECT * FROM PokemonDatabase
                 '''

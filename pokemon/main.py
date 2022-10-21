@@ -12,7 +12,7 @@ app = Flask(__name__)
 def main():
     logs.clearLogs()
     
-    if pokemonDatabase.Database().checkIfPopulated():
+    if pokemonDatabase.Database().checkIfEmpty():
         return indexPage(None)
     else:
         return indexPage(True)
