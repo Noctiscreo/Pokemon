@@ -27,12 +27,25 @@ h1 {
     text-align: center;
     width: 300px;
 }
+.flexContainer {
+    display: flex;
+}
 .card {
     border-width: 2px;
     border-style: solid;
     border-color: black;
     border-radius: 25px;
     background-image: url("parchment.jpg")
+}
+.card1 {
+    margin-right: 100px;
+}
+.card2 {
+    margin-left: 100px;
+}
+#vs {
+    margin-top: auto;
+    margin-bottom: auto;
 }
 #back {
     width: 400px;

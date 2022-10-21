@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import downloadDB
 import pokemonDatabase
 import logs
+import gamePageBackEnd
 
 app = Flask(__name__)
 
@@ -59,6 +60,45 @@ def produceCard():
     pokemonType1=pokemonType1, 
     pokemonType2=pokemonType2)
 
+@app.route("/pokemonGame")
+def pageSetup():
+    pokemonDeck = gamePageBackEnd.Deck()
+    pokemonDeck.shuffleFullDeck()
+    pokemonDeck.splitDeck()
+    pokemonDeck.shuffleDeck1()
+    pokemonDeck.shuffleDeck2()
+
+    topDeck1 = pokemonDeck.getTopCardDeck1()
+    pokemonArtwork1 = topDeck1.artwork
+    pokemonName1 = topDeck1.name
+    pokemonAttack1 = topDeck1.attack
+    pokemonDefence1 = topDeck1.defence
+    pokemonType1Deck1 = topDeck1.type1
+    pokemonType2Deck1 = topDeck1.type2
+
+    topDeck2 = pokemonDeck.getTopCardDeck2()
+    pokemonArtwork2 = topDeck2.artwork
+    pokemonName2 = topDeck2.name
+    pokemonAttack2 = topDeck2.attack
+    pokemonDefence2 = topDeck2.defence
+    pokemonType1Deck2 = topDeck2.type1
+    pokemonType2Deck2 = topDeck2.type2
+    
+    
+    return render_template("pokemonGame.html", 
+    pokemonArtwork1 = pokemonArtwork1,
+    pokemonName1 = pokemonName1,
+    pokemonAttack1 = pokemonAttack1, 
+    pokemonDefence1 = pokemonDefence1,
+    pokemonType1Deck1 = pokemonType1Deck1,
+    pokemonType2Deck1 = pokemonType2Deck1,
+    
+    pokemonArtwork2 = pokemonArtwork2,
+    pokemonName2 = pokemonName2,
+    pokemonAttack2 = pokemonAttack2, 
+    pokemonDefence2 = pokemonDefence2,
+    pokemonType1Deck2 = pokemonType1Deck2,
+    pokemonType2Deck2 = pokemonType2Deck2)
 
 if __name__ == '__main__':
     app.run()
