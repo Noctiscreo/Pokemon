@@ -37,18 +37,18 @@ h1 {
     border-radius: 25px;
     background-image: url("parchment.jpg")
 }
-.card1 {
-    margin-right: 100px;
-}
-.card2 {
-    margin-left: 100px;
-}
 #vs {
     margin-top: auto;
     margin-bottom: auto;
 }
 #back {
     width: 400px;
+    margin: auto;
+    text-align: center;
+    text-decoration: none;
+}
+#nextButton {
+    width: 100px;
     margin: auto;
     text-align: center;
     text-decoration: none;
