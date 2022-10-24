@@ -58,9 +58,3 @@ class Deck:
     def cycleDeck2(self):
         self.deck2.append(self.deck2.pop(0))
         self.deckLogs.logger.info("Moving top card of deck 2 to bottom")
-
-    def getDeck1(self):
-        return self.deck1
-
-    def getDeck2(self):
-        return self.deck2
