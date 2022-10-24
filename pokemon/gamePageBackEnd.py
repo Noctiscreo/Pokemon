@@ -9,8 +9,8 @@ class Deck:
         self.deckLogs = logs.Logger()
         try:
             pokemonDeck = pokemonDatabase.findAllPokemon()
-            self.size = len(pokemonDeck)
-            self.deck = pokemonDeck
+            self.deck = random.sample(pokemonDeck, 10)
+            self.size = len(self.deck)
         except Exception as e:
             self.deckLogs.logger.error(e)
             self.size = None
