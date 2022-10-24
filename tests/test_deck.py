@@ -25,6 +25,20 @@ class TestDeck:
         assert len(testDeck.deck1) == len(testDeck.deck2)
 
     @staticmethod
+    def test_deck_check_size():
+        # Arrange
+        testDeck = gamePageBackEnd.Deck()
+
+        # Act
+        sizeAll = testDeck.size
+        testDeck.splitDeck()
+        sizeDeck1 = testDeck.deck1Size
+        sizeDeck2 = testDeck.deck2Size
+
+        # Assert
+        assert sizeAll == 10, sizeDeck1 == 5 == sizeDeck2
+
+    @staticmethod
     def test_decks_split_no_repeating_cards():
         # Arrange
         testDeck = gamePageBackEnd.Deck()
