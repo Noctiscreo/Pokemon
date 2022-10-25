@@ -21,7 +21,7 @@ class TypesManager:
             databaseTypeConstructLogs = logs.Logger()
             try:
                 createPokemonDatabase = '''
-                                CREATE TABLE "PokemonType" (
+                                CREATE TABLE IF NOT EXISTS "PokemonType" (
                                     "Type"	TEXT,
                                     "DDFrom"	TEXT,
                                     "DDTo"	TEXT,
@@ -88,15 +88,15 @@ class TypesManager:
             except Exception as e:
                 self.typesManagerLogs.logger.error(e)
 
-    def getDamagerMultiplier(self, attackType: str, defenderPokemon: Pokemon) -> float:
+    def getAttackMultiplier(self, attackType: str, defenderPokemon: Pokemon) -> float:
         self.multiplier = 1
         for defenderPokemonType in [defenderPokemon.type1, defenderPokemon.type2]:
-            selectHalfDamageData = f'''
+            selectDoubleDamageData = f'''
                     SELECT * FROM PokemonType
                     WHERE Type = "{attackType}"
                     AND DDTo LIKE "%{defenderPokemonType}%"
                     '''
-            if not pd.read_sql_query(selectHalfDamageData, pokemonDatabase.Database().conn).empty:
+            if not pd.read_sql_query(selectDoubleDamageData, pokemonDatabase.Database().conn).empty:
                 self.multiplier *= 2
 
             selectHalfDamageData = f'''
@@ -107,11 +107,11 @@ class TypesManager:
             if not pd.read_sql_query(selectHalfDamageData, pokemonDatabase.Database().conn).empty:
                 self.multiplier *= 0.5
 
-            selectDoubleDamageData = f'''
+            selectNoDamageData = f'''
                             SELECT * FROM PokemonType
                             WHERE Type = "{attackType}"
                             AND NDTo LIKE "%{defenderPokemonType}%"
                             '''
-            if not pd.read_sql_query(selectDoubleDamageData, pokemonDatabase.Database().conn).empty:
+            if not pd.read_sql_query(selectNoDamageData, pokemonDatabase.Database().conn).empty:
                 self.multiplier *= 0
         return self.multiplier
