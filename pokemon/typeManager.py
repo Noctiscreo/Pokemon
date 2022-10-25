@@ -12,7 +12,7 @@ class TypesManager:
     def __init__(self):
         self.typesManagerLogs = logs.Logger()
         self.URL = "https://pokeapi.co/api/v2/type/"
-        self.typeDatabaseDF = pd.read_sql_query("SELECT * FROM PokemonType", pokemonDatabase.Database().conn)
+        self.df = pd.read_sql_query("SELECT * FROM PokemonType", pokemonDatabase.Database().conn)
         self.multiplier = None
 
     def __new__(cls):
@@ -84,13 +84,13 @@ class TypesManager:
                                             pokemonType["damageRelation"]["HDT"], pokemonType["damageRelation"]["NDF"],
                                             pokemonType["damageRelation"]["NDT"])
                 pokemonDatabase.Database().commitToDatabase(pokemonTypeInsertSQL, pokemonTypeInsertSQLData)
-                self.typeDatabaseDF = pd.read_sql_query("SELECT * FROM PokemonType", pokemonDatabase.Database().conn)
+                self.df = pd.read_sql_query("SELECT * FROM PokemonType", pokemonDatabase.Database().conn)
             except Exception as e:
                 self.typesManagerLogs.logger.error(e)
 
-    def getDamagerMultiplier(self, attackType: str, defenderPokemon: Pokemon):
-        for defenderPokemonType in [defenderPokemon.type1, defenderPokemon.type2]
-            self.multiplier = 1
+    def getDamagerMultiplier(self, attackType: str, defenderPokemon: Pokemon) -> float:
+        self.multiplier = 1
+        for defenderPokemonType in [defenderPokemon.type1, defenderPokemon.type2]:
             selectHalfDamageData = f'''
                     SELECT * FROM PokemonType
                     WHERE Type = "{attackType}"
