@@ -24,15 +24,18 @@ class Deck:
         self.deck2Size = None
 
     def splitDeck(self):
-        numDecks = 2
-        halfDeck = int((self.size / numDecks) // 1)
-        self.deck1 = random.sample(self.deck, halfDeck)
-        self.deck1Size = len(self.deck1)
-        self.deck2 = [card for card in self.deck if card not in self.deck1]
-        # if len(self.deck1) != len(self.deck2):
-        #     self.deck2.pop(random.randrange(halfDeck + 1))
-        self.deck2Size = len(self.deck2)
-        self.deckLogs.logger.info("Deck was split and assigned to deck 1 and deck 2")
+        try:
+            numDecks = 2
+            halfDeck = int((self.size / numDecks) // 1)
+            self.deck1 = random.sample(self.deck, halfDeck)
+            self.deck1Size = len(self.deck1)
+            self.deck2 = [card for card in self.deck if card not in self.deck1]
+            # if len(self.deck1) != len(self.deck2):
+            #     self.deck2.pop(random.randrange(halfDeck + 1))
+            self.deck2Size = len(self.deck2)
+            self.deckLogs.logger.info("Deck was split and assigned to deck 1 and deck 2")
+        except Exception as e:
+            self.deckLogs.logger.error(e)
 
     def shuffleFullDeck(self):
         random.shuffle(self.deck)
@@ -46,11 +49,11 @@ class Deck:
         random.shuffle(self.deck2)
         self.deckLogs.logger.info("Deck 2 was shuffled")
 
-    def getTopCardDeck1(self):
+    def getTopCardDeck1(self) -> Pokemon:
         self.deckLogs.logger.info("Retrieving top card of deck 1")
         return self.deck1[0]
 
-    def getTopCardDeck2(self):
+    def getTopCardDeck2(self) -> Pokemon:
         self.deckLogs.logger.info("Retrieving top card of deck 2")
         return self.deck2[0]
 
@@ -61,6 +64,12 @@ class Deck:
     def cycleDeck2(self):
         self.deck2.append(self.deck2.pop(0))
         self.deckLogs.logger.info("Moving top card of deck 2 to bottom")
+
+    def deck1Lose(self):
+        self.deck1.pop(0)
+
+    def deck2Lose(self):
+        self.deck2.pop(0)
 
 
 class Player(Enum):
@@ -86,7 +95,7 @@ class Game:
         self.currentAttacker = attackerPlayer
         self.currentStage = 0
 
-    def getHiddenState(self):
+    def getGameState(self):
         hide = 0
         show = 1
         if self.currentStage == 0:
@@ -100,11 +109,10 @@ class Game:
         self.currentStage = 1
         return self.currentAttacker
 
-    def doAttack(self, attackTypeSelected: str, attackerPokemon: Pokemon, defenderPokemon: Pokemon) -> int:
+    def doAttack(self, attackType: str, attackerPokemon: Pokemon, defenderPokemon: Pokemon) -> int:
         self.currentStage = 2
-        attackMulti = TypesManager().getAttackMultiplier(attackTypeSelected, defenderPokemon)
+        attackMulti = TypesManager().getAttackMultiplier(attackType, defenderPokemon)
         fight = int(defenderPokemon.defence) - int(attackerPokemon.attack) * attackMulti
-        self.currentAttacker = self.currentAttacker.opponent()
         attackerWin = 2
         draw = 1
         defenderWin = 0
@@ -113,4 +121,5 @@ class Game:
         elif fight == 0:
             return draw
         elif fight > 0:
+            self.currentAttacker = self.currentAttacker.opponent()
             return defenderWin
