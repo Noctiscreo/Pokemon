@@ -1,14 +1,17 @@
-import logs
-import pokemonDatabase
-import pokemonCard
+from logs import Logger
+from pokemonDatabase import findAllPokemon
+from pokemonCard import Pokemon
+from typeManager import TypesManager
 import random
+from enum import Enum, auto
+from dataclasses import dataclass
 
 
 class Deck:
     def __init__(self):
-        self.deckLogs = logs.Logger()
+        self.deckLogs = Logger()
         try:
-            pokemonDeck = pokemonDatabase.findAllPokemon()
+            pokemonDeck = findAllPokemon()
             self.deck = random.sample(pokemonDeck, 10)
             self.size = len(self.deck)
         except Exception as e:
@@ -58,3 +61,56 @@ class Deck:
     def cycleDeck2(self):
         self.deck2.append(self.deck2.pop(0))
         self.deckLogs.logger.info("Moving top card of deck 2 to bottom")
+
+
+class Player(Enum):
+    PLAYER1 = auto()
+    PLAYER2 = auto()
+
+    def opponent(self):
+        if self == Player.PLAYER1:
+            return Player.PLAYER2
+        else:
+            return Player.PLAYER1
+
+
+@dataclass(frozen=True)
+class AttackerDefenderCardState:
+    attacker: int
+    defender: int
+
+
+class Game:
+    def __init__(self, attackerPlayer: Player):
+        self.gameLogs = Logger()
+        self.currentAttacker = attackerPlayer
+        self.currentStage = 0
+
+    def getHiddenState(self):
+        hide = 0
+        show = 1
+        if self.currentStage == 0:
+            return AttackerDefenderCardState(hide, hide)
+        if self.currentStage == 1:
+            return AttackerDefenderCardState(show, hide)
+        if self.currentStage == 2:
+            return AttackerDefenderCardState(show, show)
+
+    def selectAttack(self):
+        self.currentStage = 1
+        return self.currentAttacker
+
+    def doAttack(self, attackTypeSelected: str, attackerPokemon: Pokemon, defenderPokemon: Pokemon) -> int:
+        self.currentStage = 2
+        attackMulti = TypesManager().getAttackMultiplier(attackTypeSelected, defenderPokemon)
+        fight = int(defenderPokemon.defence) - int(attackerPokemon.attack) * attackMulti
+        self.currentAttacker = self.currentAttacker.opponent()
+        attackerWin = 2
+        draw = 1
+        defenderWin = 0
+        if fight < 0:
+            return attackerWin
+        elif fight == 0:
+            return draw
+        elif fight > 0:
+            return defenderWin
