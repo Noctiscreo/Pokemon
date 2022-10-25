@@ -24,13 +24,13 @@ class DownloadData:
                 pokemonData = requests.get(pokemon[1])
                 parsedPokemon = json.loads(pokemonData.text)
                 tempPokemon = pokemonCard.Pokemon()
-                tempPokemon.name = parsedPokemon["name"].capitalize()
+                tempPokemon.name = parsedPokemon["name"]
                 tempPokemon.artwork = parsedPokemon["sprites"]["other"]["official-artwork"]["front_default"]
                 tempPokemon.attack = parsedPokemon["stats"][1]["base_stat"]
                 tempPokemon.defence = parsedPokemon["stats"][2]["base_stat"]
-                tempPokemon.type1 = parsedPokemon["types"][0]["type"]["name"].capitalize()
+                tempPokemon.type1 = parsedPokemon["types"][0]["type"]["name"]
                 if len(parsedPokemon["types"]) == 2:
-                    tempPokemon.type2 = parsedPokemon["types"][1]["type"]["name"].capitalize()
+                    tempPokemon.type2 = parsedPokemon["types"][1]["type"]["name"]
                 pokemonInfoList.append(tempPokemon)
             if len(pokemonInfoList) != 0:
                 pokemonDatabase.addPokemonToDatabase(pokemonInfoList)

@@ -1,4 +1,4 @@
-from pokemon.pokemonCard import Pokemon
+from pokemonCard import Pokemon
 import logs
 import requests
 import json
