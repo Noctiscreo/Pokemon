@@ -92,10 +92,18 @@ def cycleCards1():
 @app.route("/cycleCards2")
 def cycleCards2():
     databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
+    # if databaseEmpty:
+    #     empty = True
     app.pokemonDeck.cycleDeck2()
     topDeck2 = app.pokemonDeck.getTopCardDeck2()
     return render_template("singleCard.html", databaseCheck = databaseEmpty, pokemon = topDeck2)
-
+    
+@app.route("/removeCard2")
+def removeCard2():
+    # Returns true/false if the file has downloaded correctly.
+    databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
+    empty = "1"
+    return empty
 
 if __name__ == '__main__':
     logs.clearLogs()

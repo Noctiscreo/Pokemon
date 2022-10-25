@@ -33,7 +33,9 @@
                     element.innerHTML = data
                 });
         }
+       
     </script>
+
     <div class="container">
         <div>
             <a href="/"><img class="center" src="/static/banner.png" style="width:500px;" alt="Pokebanner"></a><br><br>
@@ -67,32 +69,49 @@
             <div id="vs">
                 <img class="center" src="/static/vs.gif" alt="Versus Image" style="width: 200px;">
             </div>
-            <div>
-                <div id="deck2">
-                    <div class="card center" style="width: 18rem;">
-                        <img class="center card-img-top" src="{{pokemon2.artwork}}" alt="Pokemon Image"
-                            style="width: 200px;">
-                        <div class="card-body">
-                            <h2 class="card-title">{{pokemon2.name}}</h2>
-                        </div>
-                        <div class="stats">
-                            <p class="attack">Attack: {{pokemon2.attack}}</p>
-                            <p class="defence">Defence: {{pokemon2.defence}}</p>
-                            <p class="type1">Type 1: {{pokemon2.type1}}</p>
-                            {% if pokemon2.type2 != "None" %}
-                            <p class="type2">Type 2: {{pokemon2.type2}}</p>
-                            {% else %}
-                            <p class="type2">&nbsp;</p>
-                            {% endif %}
+
+                <div>
+                    <div id="deck2">
+                        <div class="card center" style="width: 18rem;">
+                            <img class="center card-img-top" src="{{pokemon2.artwork}}" alt="Pokemon Image"
+                                style="width: 200px;">
+                            <div class="card-body">
+                                <h2 class="card-title">{{pokemon2.name}}</h2>
+                            </div>
+                            <div class="stats">
+                                <p class="attack">Attack: {{pokemon2.attack}}</p>
+                                <p class="defence">Defence: {{pokemon2.defence}}</p>
+                                <p class="type1">Type 1: {{pokemon2.type1}}</p>
+                                {% if pokemon2.type2 != "None" %}
+                                <p class="type2">Type 2: {{pokemon2.type2}}</p>
+                                {% else %}
+                                <p class="type2">&nbsp;</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
+                    <a onclick="updateCard2()">
+                        <h2><span id="nextButton" class="badge rounded-pill bg-primary">Next</span></h2>
+                    </a>
                 </div>
-            <a onclick="updateCard2()">
-                <h2><span id="nextButton" class="badge rounded-pill bg-primary">Next</span></h2>
-            </a>
-            </div>
+
+            <script>
+                fetch('/removeCard2')
+                    .then(data => data.text())
+                    .then(data => {
+                        if (data == "1"){
+                        // document.getElementById("deck2").style.visibility = "hidden";
+                        document.getElementById("deck2").innerHTML = '<h2><span id="nextButton" class="badge rounded-pill bg-primary">No Cards in Deck</span></h2>';
+                        document.getElementById("deck2").id = "emptyCardMessage";
+
+                        }
+                    });
+            </script>
+
+
         </div>
         {% else %}
+        
         <br>
         <h2><span id="back" class="badge rounded-pill bg-danger">No cards available</span></h2>
         {% endif %}
