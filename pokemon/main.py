@@ -92,13 +92,13 @@ def cycleCards2():
     return render_template("singleCard.html", databaseCheck = databaseEmpty, pokemon = topDeck2)
     
 @app.route("/noCards1")
-def noCards():
-    # If the deck is empty, return '1' as a string.
-    return "1"
+def noCards1():
+    # If the player 1 deck is empty, return '1' as a string.
+    return "0"
 
 @app.route("/noCards2")
-def noCards():
-    # If the deck is empty, return '1' as a string.
+def noCards2():
+    # If the player 2 deck is empty, return '1' as a string.
     return "1"
 
 if __name__ == '__main__':
