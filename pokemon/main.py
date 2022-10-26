@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def menu():
-    pass
+    return render_template("pokemonMenu.html")
 
 @app.route("/pokedex")
 def main():
