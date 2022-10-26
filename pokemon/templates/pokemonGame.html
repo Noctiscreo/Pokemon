@@ -70,7 +70,7 @@
                 <img class="center" src="/static/vs.gif" alt="Versus Image" style="width: 200px;">
             </div>
 
-                <div>
+                <div class="flex-column d-flex justify-content-center" style="width: 288px">
                     <div id="deck2">
                         <div class="card center" style="width: 18rem;">
                             <img class="center card-img-top" src="{{pokemon2.artwork}}" alt="Pokemon Image"
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    <a onclick="updateCard2()">
+                    <a id="disappear" onclick="updateCard2()">
                         <h2><span id="nextButton" class="badge rounded-pill bg-primary">Next</span></h2>
                     </a>
                 </div>
@@ -100,10 +100,11 @@
                     .then(data => data.text())
                     .then(data => {
                         if (data == "1"){
-                        // document.getElementById("deck2").style.visibility = "hidden";
-                        document.getElementById("deck2").innerHTML = '<h2><span id="nextButton" class="badge rounded-pill bg-primary">No Cards in Deck</span></h2>';
-                        document.getElementById("deck2").id = "emptyCardMessage";
-
+                        document.getElementById("deck2").innerHTML = `
+                            <h2><span class="badge rounded-pill bg-primary" style="width: 288px">No Cards in Deck</span></h2>
+                            `;
+                            console.log(document.getElementById("disappear"));
+                            document.getElementById("disappear").style.display="none";
                         }
                     });
             </script>
