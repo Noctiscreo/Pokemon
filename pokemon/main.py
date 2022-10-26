@@ -91,15 +91,15 @@ def cycleCards2():
     topDeck2 = app.pokemonDeck.getTopCardDeck2()
     return render_template("singleCard.html", databaseCheck = databaseEmpty, pokemon = topDeck2)
     
-@app.route("/removeCard")
-def removeCard():
-    deckEmpty = app.pokemonDeck.size()
-    if deckEmpty == 0:
-        return "1"
-    else:
-        return "0"
+@app.route("/noCards1")
+def noCards():
+    # If the deck is empty, return '1' as a string.
+    return "1"
 
-
+@app.route("/noCards2")
+def noCards():
+    # If the deck is empty, return '1' as a string.
+    return "1"
 
 if __name__ == '__main__':
     logs.clearLogs()

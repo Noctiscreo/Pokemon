@@ -96,11 +96,11 @@
                 </div>
 
             <script>
-                fetch('/removeCard2')
+                fetch('/noCards1')
                     .then(data => data.text())
                     .then(data => {
                         if (data == "1"){
-                        document.getElementById("deck2").innerHTML = `
+                        document.getElementById("deck1").innerHTML = `
                             <h2><span class="badge rounded-pill bg-primary" style="width: 288px">No Cards in Deck</span></h2>
                             `;
                             console.log(document.getElementById("disappear"));
@@ -108,11 +108,11 @@
                         }
                     });
 
-                fetch('/removeCard1')
+                fetch('/noCards2')
                     .then(data => data.text())
                     .then(data => {
                         if (data == "1"){
-                        document.getElementById("deck1").innerHTML = `
+                        document.getElementById("deck2").innerHTML = `
                             <h2><span class="badge rounded-pill bg-primary" style="width: 288px">No Cards in Deck</span></h2>
                             `;
                             console.log(document.getElementById("disappear"));
