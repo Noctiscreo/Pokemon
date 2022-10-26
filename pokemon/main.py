@@ -6,9 +6,6 @@ import gamePageBackEnd
 
 app = Flask(__name__)
 
-
-# Creates route (url)
-
 @app.route("/")
 def menu():
     pass
@@ -34,7 +31,6 @@ def pokemonDownload():
 
 @app.route("/pokemonDownloadDoDownload")
 def downloadPokemonData():
-    # Returns true/false if the file has downloaded correctly.
     download = downloadDB.DownloadData()
     download.download()
     downloadSuccess = download.complete
@@ -81,7 +77,6 @@ def pageSetup():
     else:
         return render_template("pokemonGame.html", databaseCheck = databaseEmpty)
 
-
 @app.route("/cycleCards1")
 def cycleCards1():
     databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
@@ -92,18 +87,19 @@ def cycleCards1():
 @app.route("/cycleCards2")
 def cycleCards2():
     databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
-    # if databaseEmpty:
-    #     empty = True
     app.pokemonDeck.cycleDeck2()
     topDeck2 = app.pokemonDeck.getTopCardDeck2()
     return render_template("singleCard.html", databaseCheck = databaseEmpty, pokemon = topDeck2)
     
-@app.route("/removeCard2")
-def removeCard2():
-    # Returns true/false if the file has downloaded correctly.
-    databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
-    empty = "1"
-    return empty
+@app.route("/removeCard")
+def removeCard():
+    deckEmpty = app.pokemonDeck.size()
+    if deckEmpty == 0:
+        return "1"
+    else:
+        return "0"
+
+
 
 if __name__ == '__main__':
     logs.clearLogs()

@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <a onclick="updateCard1()">
-                    <h2><span id="nextButton" class="badge rounded-pill bg-primary">Next</span></h2>
+                    <h2><span id="nextButton" class="badge rounded-pill bg-primary">1</span></h2>
                 </a>
             </div>
             <div id="vs">
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     <a id="disappear" onclick="updateCard2()">
-                        <h2><span id="nextButton" class="badge rounded-pill bg-primary">Next</span></h2>
+                        <h2><span id="nextButton" class="badge rounded-pill bg-danger">Next</span></h2>
                     </a>
                 </div>
 
@@ -107,8 +107,19 @@
                             document.getElementById("disappear").style.display="none";
                         }
                     });
-            </script>
 
+                fetch('/removeCard1')
+                    .then(data => data.text())
+                    .then(data => {
+                        if (data == "1"){
+                        document.getElementById("deck1").innerHTML = `
+                            <h2><span class="badge rounded-pill bg-primary" style="width: 288px">No Cards in Deck</span></h2>
+                            `;
+                            console.log(document.getElementById("disappear"));
+                            document.getElementById("disappear").style.display="none";
+                        }
+                    });  
+            </script>
 
         </div>
         {% else %}
