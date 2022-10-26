@@ -33,7 +33,40 @@
                     element.innerHTML = data
                 });
         }
-       
+        fetch('/displayNumberofCards1')
+            .then(data => data.text())
+            .then(data => {
+                document.getElementById("card1Counter").innerHTML = data
+            });
+        fetch('/displayNumberofCards2')
+            .then(data => data.text())
+            .then(data => {
+                document.getElementById("card2Counter").innerHTML = data
+            });
+
+        fetch('/noCards1')
+            .then(data => data.text())
+            .then(data => {
+                if (data == "1"){
+                document.getElementById("deck1").innerHTML = `
+                    <h2><span class="badge rounded-pill bg-danger" style="width: 288px">No Cards in Deck</span></h2>
+                    `;
+                    console.log(document.getElementById("disappear"));
+                    document.getElementById("disappear").style.display="none";
+                }
+            });
+
+        fetch('/noCards2')
+            .then(data => data.text())
+            .then(data => {
+                if (data == "1"){
+                document.getElementById("deck2").innerHTML = `
+                    <h2><span class="badge rounded-pill bg-danger" style="width: 288px">No Cards in Deck</span></h2>
+                    `;
+                    console.log(document.getElementById("disappear"));
+                    document.getElementById("disappear").style.display="none";
+                }
+            });  
     </script>
 
     <div class="container">
@@ -62,9 +95,9 @@
                         </div>
                     </div>
                 </div>
-                <a onclick="updateCard1()">
-                    <h2><span id="nextButton" class="badge rounded-pill bg-primary">1</span></h2>
-                </a>
+    
+                    <h2><span id="card1Counter" class="badge rounded-pill bg-primary"></span></h2>
+
             </div>
             <div id="vs">
                 <img class="center" src="/static/vs.gif" alt="Versus Image" style="width: 200px;">
@@ -90,36 +123,9 @@
                             </div>
                         </div>
                     </div>
-                    <a id="disappear" onclick="updateCard2()">
-                        <h2><span id="nextButton" class="badge rounded-pill bg-danger">Next</span></h2>
-                    </a>
+                    <h2><span id="card2Counter" class="badge rounded-pill bg-primary"></span></h2>
                 </div>
-
-            <script>
-                fetch('/noCards1')
-                    .then(data => data.text())
-                    .then(data => {
-                        if (data == "1"){
-                        document.getElementById("deck1").innerHTML = `
-                            <h2><span class="badge rounded-pill bg-primary" style="width: 288px">No Cards in Deck</span></h2>
-                            `;
-                            console.log(document.getElementById("disappear"));
-                            document.getElementById("disappear").style.display="none";
-                        }
-                    });
-
-                fetch('/noCards2')
-                    .then(data => data.text())
-                    .then(data => {
-                        if (data == "1"){
-                        document.getElementById("deck2").innerHTML = `
-                            <h2><span class="badge rounded-pill bg-primary" style="width: 288px">No Cards in Deck</span></h2>
-                            `;
-                            console.log(document.getElementById("disappear"));
-                            document.getElementById("disappear").style.display="none";
-                        }
-                    });  
-            </script>
+                
 
         </div>
         {% else %}
