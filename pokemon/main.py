@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import downloadDB
 import pokemonDatabase
 import logs
-import gamePageBackEnd
+from gamePageBackEnd import Game, Deck, Player
 
 app = Flask(__name__)
 
@@ -51,34 +51,30 @@ def produceCard():
 
     pokemonData = pokemonDatabase.findPokemonFromName(pokemonName)
 
-    pokemonName = pokemonData.name
-    pokemonArtwork = pokemonData.artwork
-    pokemonAttack = pokemonData.attack
-    pokemonDefence = pokemonData.defence
-    pokemonType1 = pokemonData.type1
-    pokemonType2 = pokemonData.type2
-
     return render_template("pokemonCard.html",
-    pokemonCardName=pokemonName,
-    pokemonArtwork=pokemonArtwork,
-    pokemonAttack=pokemonAttack,
-    pokemonDefence=pokemonDefence,
-    pokemonType1=pokemonType1,
-    pokemonType2=pokemonType2)
+    pokemonCardName=pokemonData.name,
+    pokemonArtwork=pokemonData.artwork,
+    pokemonAttack=pokemonData.attack,
+    pokemonDefence=pokemonData.defence,
+    pokemonType1=pokemonData.type1,
+    pokemonType2=pokemonData.type2)
 
 @app.route("/pokemonGame")
 def pageSetup():
     databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
     if databaseEmpty == False:
-        startButton = True
-        artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
-        name = "Pikachu"
-        attack = "33"
-        defence = "72"
-        type1 = "electric"
-        type2 = "water"
-        return render_template("pokemonGame.html", databaseCheck = databaseEmpty, startButton = startButton, 
-        artwork = artwork, name = name, attack = attack, defence = defence, type1 = type1, type2 = type2)
+        app.GAME = Game(Deck([], None))
+        if app.GAME.currentAttacker == Player.PLAYER1:
+            pokemonPlayer1 = app.GAME.currentAttackerDeck.getTopCard()
+        else:
+            pokemonPlayer1 = app.GAME.currentDefenderDeck.getTopCard()
+        if app.GAME.currentAttacker == Player.PLAYER2:
+            pokemonPlayer2 = app.GAME.currentAttackerDeck.getTopCard()
+        else:
+            pokemonPlayer2 = app.GAME.currentDefenderDeck.getTopCard()
+        return render_template("pokemonGame.html", databaseCheck = databaseEmpty,
+        artworkp1 = pokemonPlayer1.artwork, namep1 = pokemonPlayer1.name, attackp1 = pokemonPlayer1.attack, defencep1 = pokemonPlayer1.defence, type1p1 = pokemonPlayer1.type1, type2p1 = pokemonPlayer1.type2,
+        artworkp2 = pokemonPlayer2.artwork, namep2 = pokemonPlayer2.name, attackp2 = pokemonPlayer2.attack, defencep2 = pokemonPlayer2.defence, type1p2 = pokemonPlayer2.type1, type2p2 = pokemonPlayer2.type2)
     else:
         return render_template("pokemonGame.html", databaseCheck = databaseEmpty)
 

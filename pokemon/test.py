@@ -96,3 +96,6 @@ else:
     print("---------------------------------------------------------")
     print(f"PLAYER 2 LOST THE GAME")
     print("---------------------------------------------------------")
+
+print(Player.PLAYER1.name)
+print(type(Player.PLAYER1.name))
