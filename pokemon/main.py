@@ -118,6 +118,11 @@ def displayNumberofCards2():
     cardsDeck2 = "Cards Remaining: " + "9"
     return cardsDeck2
 
+@app.route("/testing")
+def testing():
+    hide = "0"
+    return hide
+
 if __name__ == '__main__':
     logs.clearLogs()
     app.run()

@@ -69,3 +69,14 @@ h1 {
     color: purple;
     font-weight: bold;
 }
+#cardFront {
+    position: static;
+    z-index: 1;
+}
+#cardBack {
+    position: absolute;
+    /* visibility: hidden; */
+    z-index: 2;
+}
+
+

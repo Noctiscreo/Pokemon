@@ -79,21 +79,25 @@
         <div class="flexContainer justify-content-center">
             <div>
                 <div id="player1">
-                    <div class="card center" style="width: 18rem;">
-                        <img class="center card-img-top" src="{{artwork}}" alt="Pokemon Image"
-                            style="width: 200px;">
-                        <div class="card-body">
-                            <h2 class="card-title">{{name}}</h2>
+                    <div class="card center" style="width: 288px; height: 390px;">
+                        <div id="cardBack">
+                            <img src="/static/cardBack.png" class="img-fluid" alt="Back of card">
                         </div>
-                        <div class="stats">
-                            <p class="attack">Attack: {{attack}}</p>
-                            <p class="defence">Defence: {{defence}}</p>
-                            <p class="type1">Type 1: {{type1}}</p>
-                            {% if type2 != "None" %}
-                            <p class="type2">Type 2: {{type2}}</p>
-                            {% else %}
-                            <p class="type2">&nbsp;</p>
-                            {% endif %}
+                        <div id="cardFront">
+                            <img class="center card-img-top" src="{{artwork}}" alt="Pokemon Image"
+                                style="width: 200px;">
+                            <div class="card-body">
+                                <h3 class="card-title">{{name}}</h3>
+                            </div>
+                            <div class="stats">
+                                <p class="type1">{{type1.capitalize()}}
+                                {% if type2 != "None" %}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{type2.capitalize()}}
+                                {% endif %}
+                                </p>
+                                <p class="attack">Attack: {{attack}}</p>
+                                <p class="defence">Defence: {{defence}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -105,23 +109,23 @@
                 <img class="center" src="/static/vs.gif" alt="Versus Image" style="width: 200px;">
             </div>
 
-                <div class="flex-column d-flex justify-content-center" style="width: 288px">
+                <div class="flex-column d-flex justify-content-center" style="width:18rem">
                     <div id="player2">
-                        <div class="card center" style="width: 18rem;">
+                        <div class="card center" style="width: 288px; height: 390px;">
                             <img class="center card-img-top" src="{{artwork}}" alt="Pokemon Image"
                                 style="width: 200px;">
                             <div class="card-body">
-                                <h2 class="card-title">{{name}}</h2>
+                                <h3 class="card-title">{{name}}</h3>
                             </div>
                             <div class="stats">
+                                <p class="type1">{{type1.capitalize()}}
+                                {% if type2 != "None" %}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{type2.capitalize()}}
+                                {% endif %}
+                                </p>
                                 <p class="attack">Attack: {{attack}}</p>
                                 <p class="defence">Defence: {{defence}}</p>
-                                <p class="type1">Type 1: {{type1}}</p>
-                                {% if type2 != "None" %}
-                                <p class="type2">Type 2: {{type2}}</p>
-                                {% else %}
-                                <p class="type2">&nbsp;</p>
-                                {% endif %}
+                                
                             </div>
                         </div>
                     </div>
