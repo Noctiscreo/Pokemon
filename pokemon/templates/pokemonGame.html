@@ -11,7 +11,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <link href="{{ url_for('static', filename='./styles.css') }}" rel="stylesheet" type="text/css" />
-
+    <script src="{{ url_for('static', filename='./scripts.js') }}"></script>
     <title>Pokemon Game</title>
 </head>
 
@@ -33,11 +33,13 @@
                     element.innerHTML = data
                 });
         }
+
         fetch('/displayNumberofCards1')
             .then(data => data.text())
             .then(data => {
                 document.getElementById("card1Counter").innerHTML = data
             });
+
         fetch('/displayNumberofCards2')
             .then(data => data.text())
             .then(data => {
