@@ -3,14 +3,25 @@ function unghostButton() {
     }
 
 
-fetch('/testing')
+fetch('/hiddenStatusCard1')
 .then(data => data.text())
 .then(data => {
     if (data == "1"){
-        document.getElementById("cardBack").style.visibility = "hidden";
+        document.getElementById("cardBack1").style.visibility = "hidden";
     }
     else {
-        document.getElementById("cardBack").style.visibility = "visible";
+        document.getElementById("cardBack1").style.visibility = "visible";
+    }
+});
+
+fetch('/hiddenStatusCard2')
+.then(data => data.text())
+.then(data => {
+    if (data == "1"){
+        document.getElementById("cardBack2").style.visibility = "hidden";
+    }
+    else {
+        document.getElementById("cardBack2").style.visibility = "visible";
     }
 });
 

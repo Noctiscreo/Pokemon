@@ -61,19 +61,25 @@ h1 {
     color: green;
     font-weight: bold;
 }
-.type1 {
-    color: goldenrod;
+.types {
+    color: black;
     font-weight: bold;
 }
-.type2 {
-    color: purple;
-    font-weight: bold;
-}
-#cardFront {
+
+#cardFront1 {
     position: static;
     z-index: 1;
 }
-#cardBack {
+#cardBack1 {
+    position: absolute;
+    /* visibility: hidden; */
+    z-index: 2;
+}
+#cardFront2 {
+    position: static;
+    z-index: 1;
+}
+#cardBack2 {
     position: absolute;
     /* visibility: hidden; */
     z-index: 2;

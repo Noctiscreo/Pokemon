@@ -118,8 +118,14 @@ def displayNumberofCards2():
     cardsDeck2 = "Cards Remaining: " + "9"
     return cardsDeck2
 
-@app.route("/testing")
-def testing():
+@app.route("/hiddenStatusCard1")
+def hiddenStatusCard1():
+    # Check for hidden status. Return card 1 status
+    hide = "0"
+    return hide
+@app.route("/hiddenStatusCard2")
+def hiddenStatusCard2():
+    # Check for hidden status. Return card 2 status
     hide = "0"
     return hide
 
