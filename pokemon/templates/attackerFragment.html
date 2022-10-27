@@ -1,0 +1,10 @@
+<form id="attackList" class= "justify-content-center" action="/pokemonCard">
+    <select id="attackSelectField" class="form-control center" name="attackList" onchange="unghostButton()">
+        <option value="default" disabled selected>Select your Attack</option>
+        {% for type in attackList %}
+            <option value={{type}}>{{type.capitalize()}}</option>
+        {% endfor %}
+    </select><br>
+    <input id="selectPokemon" type="submit" value="Submit" disabled>
+        
+</form>

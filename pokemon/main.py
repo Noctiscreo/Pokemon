@@ -70,14 +70,16 @@ def produceCard():
 def pageSetup():
     databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
     if databaseEmpty == False:
-        startButton = True
+        # We need top card of each deck (pokemon class)
         artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
         name = "Pikachu"
         attack = "33"
         defence = "72"
         type1 = "electric"
         type2 = "water"
-        return render_template("pokemonGame.html", databaseCheck = databaseEmpty, startButton = startButton, 
+        #pokemon1 = imported from deck 1
+        #pokemon2 = imported from deck 2
+        return render_template("pokemonGame.html", databaseCheck = databaseEmpty, 
         artwork = artwork, name = name, attack = attack, defence = defence, type1 = type1, type2 = type2)
     else:
         return render_template("pokemonGame.html", databaseCheck = databaseEmpty)
@@ -128,6 +130,18 @@ def hiddenStatusCard2():
     # Check for hidden status. Return card 2 status
     hide = "0"
     return hide
+
+@app.route("/attackerAndTypes/<playerAttacking>")
+def attackerAndTypes(playerAttacking):
+    attackList = ["fire", "water"] # backEndFunction() which takes PLAYER1/PLAYER2 as an input and returns a list of types
+    return render_template("attackerFragment.html", attackList = attackList)
+
+@app.route("/attacker")
+def attacker():
+    # Check for attacker returns PLAYER1 or PLAYER2
+    attacker = "PLAYER1"
+    return attacker
+
 
 if __name__ == '__main__':
     logs.clearLogs()
