@@ -17,22 +17,22 @@
 
 <body>
     <script>
-        function updateCard1() {
-            fetch('/cycleCards1')
-                .then(data => data.text())
-                .then(data => {
-                    element = document.getElementById("deck1");
-                    element.innerHTML = data
-                });
-        }
-        function updateCard2() {
-            fetch('/cycleCards2')
-                .then(data => data.text())
-                .then(data => {
-                    element = document.getElementById("deck2");
-                    element.innerHTML = data
-                });
-        }
+        // function updateCard1() {
+        //     fetch('/cycleCards1')
+        //         .then(data => data.text())
+        //         .then(data => {
+        //             element = document.getElementById("player1");
+        //             element.innerHTML = data
+        //         });
+        // }
+        // function updateCard2() {
+        //     fetch('/cycleCards2')
+        //         .then(data => data.text())
+        //         .then(data => {
+        //             element = document.getElementById("player2");
+        //             element.innerHTML = data
+        //         });
+        // }
 
         fetch('/displayNumberofCards1')
             .then(data => data.text())
@@ -50,7 +50,7 @@
             .then(data => data.text())
             .then(data => {
                 if (data == "1"){
-                document.getElementById("deck1").innerHTML = `
+                document.getElementById("player1").innerHTML = `
                     <h2><span class="badge rounded-pill bg-danger" style="width: 288px">No Cards in Deck</span></h2>
                     `;
                     console.log(document.getElementById("disappear"));
@@ -62,7 +62,7 @@
             .then(data => data.text())
             .then(data => {
                 if (data == "1"){
-                document.getElementById("deck2").innerHTML = `
+                document.getElementById("player2").innerHTML = `
                     <h2><span class="badge rounded-pill bg-danger" style="width: 288px">No Cards in Deck</span></h2>
                     `;
                     console.log(document.getElementById("disappear"));
@@ -78,19 +78,19 @@
         {% if databaseCheck == False %}
         <div class="flexContainer justify-content-center">
             <div>
-                <div id="deck1">
+                <div id="player1">
                     <div class="card center" style="width: 18rem;">
-                        <img class="center card-img-top" src="{{pokemon1.artwork}}" alt="Pokemon Image"
+                        <img class="center card-img-top" src="{{artwork}}" alt="Pokemon Image"
                             style="width: 200px;">
                         <div class="card-body">
-                            <h2 class="card-title">{{pokemon1.name}}</h2>
+                            <h2 class="card-title">{{name}}</h2>
                         </div>
                         <div class="stats">
-                            <p class="attack">Attack: {{pokemon1.attack}}</p>
-                            <p class="defence">Defence: {{pokemon1.defence}}</p>
-                            <p class="type1">Type 1: {{pokemon1.type1}}</p>
-                            {% if pokemon1.type2 != "None" %}
-                            <p class="type2">Type 2: {{pokemon1.type2}}</p>
+                            <p class="attack">Attack: {{attack}}</p>
+                            <p class="defence">Defence: {{defence}}</p>
+                            <p class="type1">Type 1: {{type1}}</p>
+                            {% if type2 != "None" %}
+                            <p class="type2">Type 2: {{type2}}</p>
                             {% else %}
                             <p class="type2">&nbsp;</p>
                             {% endif %}
@@ -98,7 +98,7 @@
                     </div>
                 </div>
     
-                    <h2><span id="card1Counter" class="badge rounded-pill bg-primary"></span></h2>
+                <h2><span id="card1Counter" class="badge rounded-pill bg-primary"></span></h2>
 
             </div>
             <div id="vs">
@@ -106,19 +106,19 @@
             </div>
 
                 <div class="flex-column d-flex justify-content-center" style="width: 288px">
-                    <div id="deck2">
+                    <div id="player2">
                         <div class="card center" style="width: 18rem;">
-                            <img class="center card-img-top" src="{{pokemon2.artwork}}" alt="Pokemon Image"
+                            <img class="center card-img-top" src="{{artwork}}" alt="Pokemon Image"
                                 style="width: 200px;">
                             <div class="card-body">
-                                <h2 class="card-title">{{pokemon2.name}}</h2>
+                                <h2 class="card-title">{{name}}</h2>
                             </div>
                             <div class="stats">
-                                <p class="attack">Attack: {{pokemon2.attack}}</p>
-                                <p class="defence">Defence: {{pokemon2.defence}}</p>
-                                <p class="type1">Type 1: {{pokemon2.type1}}</p>
-                                {% if pokemon2.type2 != "None" %}
-                                <p class="type2">Type 2: {{pokemon2.type2}}</p>
+                                <p class="attack">Attack: {{attack}}</p>
+                                <p class="defence">Defence: {{defence}}</p>
+                                <p class="type1">Type 1: {{type1}}</p>
+                                {% if type2 != "None" %}
+                                <p class="type2">Type 2: {{type2}}</p>
                                 {% else %}
                                 <p class="type2">&nbsp;</p>
                                 {% endif %}
@@ -140,10 +140,7 @@
             <h2><span id="back" class="badge rounded-pill bg-primary">Back to Main Page</span></h2>
         </a>
 
-
-
     </div>
-
 
 </body>
 

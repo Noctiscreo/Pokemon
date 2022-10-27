@@ -70,30 +70,31 @@ def produceCard():
 def pageSetup():
     databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
     if databaseEmpty == False:
-        pokemonDeck = gamePageBackEnd.Deck()
-        app.pokemonDeck = pokemonDeck
-        pokemonDeck.splitDeck()
-        pokemonDeck.shuffleDeck1()
-        pokemonDeck.shuffleDeck2()
-        topDeck1 = app.pokemonDeck.getTopCardDeck1()
-        topDeck2 = app.pokemonDeck.getTopCardDeck2()
-        return render_template("pokemonGame.html", databaseCheck = databaseEmpty, pokemon1 = topDeck1, pokemon2 = topDeck2)
+        startButton = True
+        artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+        name = "Pikachu"
+        attack = "33"
+        defence = "72"
+        type1 = "electric"
+        type2 = "water"
+        return render_template("pokemonGame.html", databaseCheck = databaseEmpty, startButton = startButton, 
+        artwork = artwork, name = name, attack = attack, defence = defence, type1 = type1, type2 = type2)
     else:
         return render_template("pokemonGame.html", databaseCheck = databaseEmpty)
 
-@app.route("/cycleCards1")
-def cycleCards1():
-    databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
-    app.pokemonDeck.cycleDeck1()
-    topDeck1 = app.pokemonDeck.getTopCardDeck1()
-    return render_template("singleCard.html", databaseCheck = databaseEmpty, pokemon = topDeck1)
+# @app.route("/cycleCards1")
+# def cycleCards1():
+#     databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
+#     app.pokemonDeck.cycleDeck1()
+#     topDeck1 = app.pokemonDeck.getTopCardDeck1()
+#     return render_template("singleCard.html", databaseCheck = databaseEmpty, pokemon = topDeck1)
 
-@app.route("/cycleCards2")
-def cycleCards2():
-    databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
-    app.pokemonDeck.cycleDeck2()
-    topDeck2 = app.pokemonDeck.getTopCardDeck2()
-    return render_template("singleCard.html", databaseCheck = databaseEmpty, pokemon = topDeck2)
+# @app.route("/cycleCards2")
+# def cycleCards2():
+#     databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
+#     app.pokemonDeck.cycleDeck2()
+#     topDeck2 = app.pokemonDeck.getTopCardDeck2()
+#     return render_template("singleCard.html", databaseCheck = databaseEmpty, pokemon = topDeck2)
 
 @app.route("/noCards1")
 def noCards1():
