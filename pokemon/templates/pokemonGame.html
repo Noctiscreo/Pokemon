@@ -102,14 +102,16 @@
                             </div>
                         </div>
                     </div>
-                    <h2><span id="card1Counter" class="badge rounded-pill bg-primary"></span></h2>
+                    <br><h2><span id="card1Counter" class="badge rounded-pill bg-primary"></span></h2>
+                    <div id="player1Attack">
+                    </div>
                 </div>
                 
                 <div id="vs">
                     <img class="center" src="/static/vs.gif" alt="Versus Image" style="width: 200px;">
                 </div>
 
-                <div class="flex-column d-flex justify-content-center" style="width:18rem">
+                <div>
                     <div>
                         <div id="player2">
                             <h2><span id="p2Label" class="center badge rounded-pill bg-danger">Player 2</span></h2>
@@ -135,7 +137,9 @@
                                 </div>
                             </div>
                         </div>
-                        <h2><span id="card2Counter" class="badge rounded-pill bg-primary"></span></h2>
+                        <br><h2><span id="card2Counter" class="badge rounded-pill bg-primary"></span></h2>
+                        <div id="player2Attack">
+                        </div>
                     </div>
                 </div>     
             </div>
@@ -144,7 +148,7 @@
         <h2><span id="back" class="badge rounded-pill bg-danger">No cards available</span></h2>
         {% endif %}
         <br><br>
-        <h2><span id="startButton" class="center badge rounded-pill bg-success" style="width: 200px;">START</span></h2>
+        <h2><span id="startButton" class="center badge rounded-pill bg-success" style="width: 200px;" onclick="startGame()">START</span></h2>
         <a href="/">
             <h2><span id="back" class="badge rounded-pill bg-primary">Back to Main Page</span></h2>
         </a>
@@ -155,8 +159,4 @@
 
 </html>
 
-
-
-<div id="startButton">
-    >
 </div>

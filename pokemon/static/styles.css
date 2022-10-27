@@ -27,6 +27,10 @@ h1 {
     text-align: center;
     width: 300px;
 }
+#attackSelectField {
+    text-align: center; 
+    width: 200px;
+}
 .flexContainer {
     display: flex;
 }
@@ -35,6 +39,7 @@ h1 {
     border-style: solid;
     border-color: black;
     border-radius: 25px;
+    box-shadow: 2px 5px 15px ;
     background-image: url("parchment.jpg")
 }
 #vs {
