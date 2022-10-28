@@ -41,6 +41,7 @@ function startGame() {
 }
 
 function nextRound() {
+    
     fetch("/attacker")
     .then(data => data.text())
     .then(data => {
@@ -51,6 +52,13 @@ function nextRound() {
             document.getElementById("cardBack2").style.visibility = "hidden"
         }
     attackers(data)
+    })
+    fetch("/newRound")
+    .then(data => data.json())
+    .then(data => {
+        console.log(data)
+        document.getElementById("cardFront1").innerHTML =
+        document.getElementById("cardFront2").innerHTML =
     })
 }
 

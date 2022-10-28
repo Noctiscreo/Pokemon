@@ -33,11 +33,11 @@
                                 <img class="center card-img-top" src="{{player1Card.artwork}}" alt="Pokemon Image"
                                     style="width: 200px;">
                                 <div class="card-body">
-                                    <h3 class="card-title">{{player1Card.name}}</h3>
+                                    <h3 class="card-title">{{player1Card.name.capitalize()}}</h3>
                                 </div>
                                 <div class="stats">
                                     <p class="types">{{player1Card.type1}}
-                                    {% if type2 != "None" %}
+                                    {% if type2 != None %}
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{player1Card.type2}}
                                     {% endif %}
                                     </p>
@@ -68,11 +68,11 @@
                                     <img class="center card-img-top" src="{{player2Card.artwork}}" alt="Pokemon Image"
                                         style="width: 200px;">
                                     <div class="card-body">
-                                        <h3 class="card-title">{{player2Card.name}}</h3>
+                                        <h3 class="card-title">{{player2Card.name.capitalize()}}</h3>
                                     </div>
                                     <div class="stats">
                                         <p class="types">{{player2Card.type1}}
-                                        {% if type2 != "None" %}
+                                        {% if type2 != None %}
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{player2Card.type2}}
                                         {% endif %}
                                         </p>
