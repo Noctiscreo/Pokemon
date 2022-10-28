@@ -101,7 +101,7 @@ def pageSetup():
 @app.route("/noCards1")
 def noCards1():
     # If the player 1 deck is empty, return '1' as a string.
-    return "0"
+    return "1"
 
 @app.route("/noCards2")
 def noCards2():
@@ -147,10 +147,8 @@ def sendDamage():
     # Check for attacker returns PLAYER1 or PLAYER2
     # reveal cards
     attacker = "PLAYER1"
-    args = request.args
-    attackData = args["attackList"]
-    damageMultiplier = 2 # backEndFunction() takes type as an input and returns a number 
-    return json.dumps([attacker, damageMultiplier])
+    winState = 1 # backEndFunction() takes type as an input and returns a number 
+    return json.dumps([attacker, winState])
     
 
 if __name__ == '__main__':
