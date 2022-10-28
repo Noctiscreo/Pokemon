@@ -89,6 +89,19 @@ def pageSetup():
     else:
         return render_template("pokemonGame.html", databaseCheck=databaseEmpty)
 
+@app.route("/newRound")
+def newRound():
+    attackerDefenderCards = app.GAME.selectAttackStage()
+    attackerCard = attackerDefenderCards[0]
+    defenderCard = attackerDefenderCards[1]
+    if app.GAME.currentAttacker == Player.PLAYER1:
+        player1Card = attackerCard
+        player2Card = defenderCard
+    elif app.GAME.currentAttacker == Player.PLAYER2:
+        player1Card = defenderCard
+        player2Card = attackerCard
+    x = json.dumps([player1Card.tojson(), player2Card.tojson()])
+    return x
 
 @app.route("/noCards1")
 def noCards1():
@@ -113,17 +126,17 @@ def noCards2():
 @app.route("/displayNumberofCards1")
 def displayNumberofCards1():
     if app.GAME.currentAttacker == Player.PLAYER1:
-        return len(app.GAME.currentAttackerDeck.deck)
+        return "Cards remaining: " + str(len(app.GAME.currentAttackerDeck.deck))
     elif app.GAME.currentDefender == Player.PLAYER1:
-        return len(app.GAME.currentDefenderDeck.deck)
+        return "Cards remaining: " + str(len(app.GAME.currentDefenderDeck.deck))
 
 
 @app.route("/displayNumberofCards2")
 def displayNumberofCards2():
     if app.GAME.currentAttacker == Player.PLAYER2:
-        return len(app.GAME.currentAttackerDeck.deck)
+        return "Cards remaining: " + str(len(app.GAME.currentAttackerDeck.deck))
     elif app.GAME.currentDefender == Player.PLAYER2:
-        return len(app.GAME.currentDefenderDeck.deck)
+        return "Cards remaining: " + str(len(app.GAME.currentDefenderDeck.deck))
 
 
 @app.route("/hiddenStatusCard1")
@@ -164,14 +177,10 @@ def attacker():
 
 @app.route("/sendDamage")
 def sendDamage():
-    # Check for attacker returns PLAYER1 or PLAYER2
-    # reveal cards
-
-    attacker = app.GAME.currentAttacker.name
-    winState = 1 # backEndFunction() takes type as an input and returns a number 
-    return json.dumps([attacker, winState])
-    
-
+    attackerType = request.args["attackList"]
+    winState = app.GAME.doAttackStage(attackerType)
+    attackerPlayer = app.GAME.currentAttacker.name
+    return json.dumps([attackerPlayer, winState])
 
 if __name__ == '__main__':
     logs.clearLogs()
