@@ -166,11 +166,11 @@ def attacker():
 def sendDamage():
     # Check for attacker returns PLAYER1 or PLAYER2
     # reveal cards
-    attackerPlayer = app.GAME.currentAttacker.name
-    args = request.args
-    attackData = args["attackList"]
-    damageMultiplier = 2  # backEndFunction() takes type as an input and returns a number
-    return json.dumps([attackerPlayer, damageMultiplier])
+
+    attacker = app.GAME.currentAttacker.name
+    winState = 1 # backEndFunction() takes type as an input and returns a number 
+    return json.dumps([attacker, winState])
+    
 
 
 if __name__ == '__main__':
