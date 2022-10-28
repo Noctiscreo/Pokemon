@@ -53,12 +53,15 @@ function nextRound() {
         }
     attackers(data)
     })
-    fetch("/newRound")
-    .then(data => data.json())
+    fetch("/newRoundP2")
+    .then(data => data.text())
     .then(data => {
-        console.log(data)
-        document.getElementById("cardFront1").innerHTML =
-        document.getElementById("cardFront2").innerHTML =
+        document.getElementById("cardFront2").innerHTML = data
+    })
+    fetch("/newRoundP1")
+    .then(data => data.text())
+    .then(data => {
+        document.getElementById("cardFront1").innerHTML = data
     })
 }
 

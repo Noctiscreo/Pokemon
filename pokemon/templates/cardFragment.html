@@ -1,14 +1,14 @@
-<img class="center card-img-top" src="{{player2Card.artwork}}" alt="Pokemon Image"
+<img class="center card-img-top" src="{{playerCard.artwork}}" alt="Pokemon Image"
     style="width: 200px;">
 <div class="card-body">
-    <h3 class="card-title">{{player2Card.name.capitalize()}}</h3>
+    <h3 class="card-title">{{playerCard.name}}</h3>
 </div>
 <div class="stats">
-    <p class="types">{{player2Card.type1}}
+    <p class="types">{{playerCard.type1}}
     {% if type2 != None %}
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{player2Card.type2}}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{playerCard.type2}}
     {% endif %}
     </p>
-    <p class="attack">Attack: {{player2Card.attack}}</p>
-    <p class="defence">Defence: {{player2Card.defence}}</p>
+    <p class="attack">Attack: {{playerCard.attack}}</p>
+    <p class="defence">Defence: {{playerCard.defence}}</p>
 </div>
