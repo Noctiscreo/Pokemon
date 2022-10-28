@@ -27,7 +27,7 @@
                 <select id="selectField" class="form-control" name="pokemonList" onchange="unghostButton()">
                     <option value="default" disabled selected>Select your Pokemon</option>
                     {% for pokemon in pokemonList %}
-                        <option value={{pokemon["Name"]}}>{{pokemon["Name"]}}</option>
+                        <option value={{pokemon["Name"]}}>{{pokemon["Name"].capitalize()}}</option>
                     {% endfor %}
                 </select><br>
                 <input id="selectPokemon" type="submit" value="Submit" disabled>
