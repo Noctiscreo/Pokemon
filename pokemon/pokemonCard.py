@@ -5,4 +5,4 @@ class Pokemon:
         self.attack = None
         self.defence = None
         self.type1 = None
-        self.type2 = None
+        self.type2 = "None"

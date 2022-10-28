@@ -3,6 +3,7 @@ import downloadDB
 import pokemonDatabase
 import logs
 import json
+from gamePageBackEnd import Deck, Game, Player
 
 app = Flask(__name__)
 
@@ -13,9 +14,9 @@ app = Flask(__name__)
 def menu():
     return render_template("pokemonMenu.html")
 
+
 @app.route("/pokedex")
 def main():
-
     if pokemonDatabase.Database().checkIfEmpty():
         return indexPage(None)
     else:
@@ -28,9 +29,11 @@ def indexPage(downloadSuccess):
 
     return render_template("pokedex.html", pokemonList=pokemonList, downloadSuccess=downloadSuccess)
 
+
 @app.route("/pokemonDownload")
 def pokemonDownload():
     return render_template("pokemonDownload.html")
+
 
 @app.route("/pokemonDownloadDoDownload")
 def downloadPokemonData():
@@ -59,99 +62,116 @@ def produceCard():
     pokemonType2 = pokemonData.type2
 
     return render_template("pokemonCard.html",
-    pokemonCardName=pokemonName,
-    pokemonArtwork=pokemonArtwork,
-    pokemonAttack=pokemonAttack,
-    pokemonDefence=pokemonDefence,
-    pokemonType1=pokemonType1,
-    pokemonType2=pokemonType2)
+                           pokemonCardName=pokemonName,
+                           pokemonArtwork=pokemonArtwork,
+                           pokemonAttack=pokemonAttack,
+                           pokemonDefence=pokemonDefence,
+                           pokemonType1=pokemonType1,
+                           pokemonType2=pokemonType2)
+
 
 @app.route("/pokemonGame")
 def pageSetup():
     databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
-    if databaseEmpty == False:
-        # We need top card of each deck (pokemon class)
-        artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
-        name = "Pikachu"
-        attack = "33"
-        defence = "72"
-        type1 = "electric"
-        type2 = "water"
-        #pokemon1 = imported from deck 1
-        #pokemon2 = imported from deck 2
-        return render_template("pokemonGame.html", databaseCheck = databaseEmpty, 
-        artwork = artwork, name = name, attack = attack, defence = defence, type1 = type1, type2 = type2)
+    if not databaseEmpty:
+        app.GAME = Game(Deck([], None))
+        attackerDefenderCards = app.GAME.selectAttackStage()
+        attackerCard = attackerDefenderCards[0]
+        defenderCard = attackerDefenderCards[1]
+        if app.GAME.currentAttacker == Player.PLAYER1:
+            player1Card = attackerCard
+            player2Card = defenderCard
+        elif app.GAME.currentAttacker == Player.PLAYER2:
+            player1Card = defenderCard
+            player2Card = attackerCard
+        return render_template("pokemonGame.html", databaseCheck=databaseEmpty,
+                               player1Card=player1Card, player2Card=player2Card)
     else:
-        return render_template("pokemonGame.html", databaseCheck = databaseEmpty)
+        return render_template("pokemonGame.html", databaseCheck=databaseEmpty)
 
-# @app.route("/cycleCards1")
-# def cycleCards1():
-#     databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
-#     app.pokemonDeck.cycleDeck1()
-#     topDeck1 = app.pokemonDeck.getTopCardDeck1()
-#     return render_template("singleCard.html", databaseCheck = databaseEmpty, pokemon = topDeck1)
-
-# @app.route("/cycleCards2")
-# def cycleCards2():
-#     databaseEmpty = pokemonDatabase.Database().checkIfEmpty()
-#     app.pokemonDeck.cycleDeck2()
-#     topDeck2 = app.pokemonDeck.getTopCardDeck2()
-#     return render_template("singleCard.html", databaseCheck = databaseEmpty, pokemon = topDeck2)
 
 @app.route("/noCards1")
 def noCards1():
-    # If the player 1 deck is empty, return '1' as a string.
-    return "0"
+    if app.GAME.currentAttacker == Player.PLAYER1 and app.GAME.currentAttackerDeck.empty():
+        return "1"
+    elif app.GAME.currentDefender == Player.PLAYER1 and app.GAME.currentDefenderDeck.empty():
+        return "1"
+    else:
+        return "0"
+
 
 @app.route("/noCards2")
 def noCards2():
-    # If the player 2 deck is empty, return '1' as a string.
-    return "0"
+    if app.GAME.currentAttacker == Player.PLAYER2 and app.GAME.currentAttackerDeck.empty():
+        return "1"
+    elif app.GAME.currentDefender == Player.PLAYER2 and app.GAME.currentDefenderDeck.empty():
+        return "1"
+    else:
+        return "0"
+
 
 @app.route("/displayNumberofCards1")
 def displayNumberofCards1():
-    # Requires an input of number of cards in deck one, in a string.
-    cardsDeck1 = "Cards Remaining: " + "10"
-    return cardsDeck1
+    if app.GAME.currentAttacker == Player.PLAYER1:
+        return len(app.GAME.currentAttackerDeck.deck)
+    elif app.GAME.currentDefender == Player.PLAYER1:
+        return len(app.GAME.currentDefenderDeck.deck)
+
 
 @app.route("/displayNumberofCards2")
 def displayNumberofCards2():
-    # Requires an input of number of cards in deck two, in a string.
-    cardsDeck2 = "Cards Remaining: " + "9"
-    return cardsDeck2
+    if app.GAME.currentAttacker == Player.PLAYER2:
+        return len(app.GAME.currentAttackerDeck.deck)
+    elif app.GAME.currentDefender == Player.PLAYER2:
+        return len(app.GAME.currentDefenderDeck.deck)
+
 
 @app.route("/hiddenStatusCard1")
 def hiddenStatusCard1():
-    # Check for hidden status. Return card 1 status
-    hide = "0"
-    return hide
+    cardStatus = app.GAME.getGameState()
+    if app.GAME.currentAttacker == Player.PLAYER1:
+        return str(cardStatus[0])
+    elif app.GAME.currentDefender == Player.PLAYER1:
+        return str(cardStatus[1])
+
+
 @app.route("/hiddenStatusCard2")
 def hiddenStatusCard2():
-    # Check for hidden status. Return card 2 status
-    hide = "0"
-    return hide
+    cardStatus = app.GAME.getGameState()
+    if app.GAME.currentAttacker == Player.PLAYER2:
+        return str(cardStatus[0])
+    elif app.GAME.currentDefender == Player.PLAYER2:
+        return str(cardStatus[1])
+
 
 @app.route("/attackerAndTypes/<playerAttacking>")
 def attackerAndTypes(playerAttacking):
-    attackList = ["fire", "water"] # backEndFunction() which takes PLAYER1/PLAYER2 as an input and returns a list of types
-    return render_template("attackerFragment.html", attackList = attackList)
+    attackList = []
+    attackList.append(app.GAME.currentAttackerDeck.getTopCard().type1)
+    attackerType2 = app.GAME.currentAttackerDeck.getTopCard().type2
+    if attackerType2 is not None:
+        attackList.append(attackerType2)
+
+    return render_template("attackerFragment.html", attackList=attackList)
+
 
 @app.route("/attacker")
 def attacker():
     # Check for attacker returns PLAYER1 or PLAYER2
-    attacker = "PLAYER1"
-    return attacker
+    attackerPlayer = app.GAME.currentAttacker.name
+    return attackerPlayer
+
 
 @app.route("/sendDamage")
 def sendDamage():
     # Check for attacker returns PLAYER1 or PLAYER2
     # reveal cards
-    attacker = "PLAYER1"
+    attackerPlayer = app.GAME.currentAttacker.name
     args = request.args
     attackData = args["attackList"]
-    damageMultiplier = 2 # backEndFunction() takes type as an input and returns a number 
-    return json.dumps([attacker, damageMultiplier])
-    
+    damageMultiplier = 2  # backEndFunction() takes type as an input and returns a number
+    return json.dumps([attackerPlayer, damageMultiplier])
+
 
 if __name__ == '__main__':
     logs.clearLogs()
