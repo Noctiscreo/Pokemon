@@ -89,8 +89,8 @@ def pageSetup():
     else:
         return render_template("pokemonGame.html", databaseCheck=databaseEmpty)
 
-@app.route("/newRound")
-def newRound():
+@app.route("/newRoundP1")
+def newRoundP1():
     attackerDefenderCards = app.GAME.selectAttackStage()
     attackerCard = attackerDefenderCards[0]
     defenderCard = attackerDefenderCards[1]
@@ -100,8 +100,21 @@ def newRound():
     elif app.GAME.currentAttacker == Player.PLAYER2:
         player1Card = defenderCard
         player2Card = attackerCard
-    x = json.dumps([player1Card.tojson(), player2Card.tojson()])
-    return x
+
+    return render_template("cardFragment.html", playerCard=player1Card)
+
+@app.route("/newRoundP2")
+def newRoundP2():
+    attackerDefenderCards = app.GAME.selectAttackStage()
+    attackerCard = attackerDefenderCards[0]
+    defenderCard = attackerDefenderCards[1]
+    if app.GAME.currentAttacker == Player.PLAYER1:
+        player1Card = attackerCard
+        player2Card = defenderCard
+    elif app.GAME.currentAttacker == Player.PLAYER2:
+        player1Card = defenderCard
+        player2Card = attackerCard
+    return render_template("cardFragment.html", playerCard=player2Card)
 
 @app.route("/noCards1")
 def noCards1():
