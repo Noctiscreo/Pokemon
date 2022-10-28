@@ -52,3 +52,38 @@ function attackers(playerAttacking) {
         }
     })
 }
+
+function revealCard1() {
+    fetch('/hiddenStatusCard1')
+    .then(data => data.text())
+    .then(data => {
+        if (data == "1"){
+            document.getElementById("cardBack1").style.visibility = "hidden";
+        }
+        else {
+            document.getElementById("cardBack1").style.visibility = "visible";
+        }
+    });
+}
+   
+function revealCard2() {
+    fetch('/hiddenStatusCard2')
+    .then(data => data.text())
+    .then(data => {
+        if (data == "1"){
+            document.getElementById("cardBack2").style.visibility = "hidden";
+        }
+        else {
+            document.getElementById("cardBack2").style.visibility = "visible";
+        }
+    });
+}
+
+function attackTypeSelected() {
+    attackType = document.getElementById("attackSelectField").value
+    fetch("/sendDamage?attackList=" + attackType)
+    .then(data => data.json())
+    .then(data => {
+        console.log(data)
+    });
+}

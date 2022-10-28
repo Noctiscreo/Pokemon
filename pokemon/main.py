@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import downloadDB
 import pokemonDatabase
 import logs
-import gamePageBackEnd
+import json
 
 app = Flask(__name__)
 
@@ -142,6 +142,16 @@ def attacker():
     attacker = "PLAYER1"
     return attacker
 
+@app.route("/sendDamage")
+def sendDamage():
+    # Check for attacker returns PLAYER1 or PLAYER2
+    # reveal cards
+    attacker = "PLAYER1"
+    args = request.args
+    attackData = args["attackList"]
+    damageMultiplier = 2 # backEndFunction() takes type as an input and returns a number 
+    return json.dumps([attacker, damageMultiplier])
+    
 
 if __name__ == '__main__':
     logs.clearLogs()
