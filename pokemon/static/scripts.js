@@ -52,3 +52,21 @@ function attackers(playerAttacking) {
         }
     })
 }
+
+function showDefender() {
+    attackType = document.getElementById("attackSelectField").value
+    fetch("/sendDamage?attackList=" + attackType)
+    .then(data => data.json())
+    .then(data => {
+        
+    });
+}
+
+function attackTypeSelected() {
+    attackType = document.getElementById("attackSelectField").value
+    fetch("/sendDamage?attackList=" + attackType)
+    .then(data => data.json())
+    .then(data => {
+        
+    });
+}
